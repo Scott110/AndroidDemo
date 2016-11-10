@@ -1,0 +1,84 @@
+// Top-level build file where you can add configuration options common to all sub-projects/modules.
+
+buildscript {
+    repositories {
+        jcenter()
+    }
+    dependencies {
+        classpath 'com.android.tools.build:gradle:2.2.2'
+        classpath 'com.neenbedankt.gradle.plugins:android-apt:1.8'
+
+        // NOTE: Do not place your application dependencies here; they belong
+        // in the individual module build.gradle files
+    }
+}
+
+allprojects {
+    repositories {
+        jcenter()
+        maven { url "https://jitpack.io" }
+    }
+
+
+}
+
+task clean(type: Delete) {
+    delete rootProject.buildDir
+}
+
+def supportVersion = '24.2.1'
+def multidexVersion = '1.0.1'
+def retrofitVersion = '2.1.0'
+def okhttpVersion = '3.4.1'
+def okhttpCookieVersion = 'v1.0.0'
+def glideVersion = '3.7.0'
+def glideTransformationVersion = '2.0.1'
+def rxVersion = '1.2.1'
+def rxLifeVersion = '0.8.0'
+def rxCacheVersion = '1.6.4'
+def rxCacheJacksonVersion = '0.0.3'
+def fastjsonVersion = '1.1.54.android'
+
+project.ext {
+    applicationId = "com.scott.demo"
+    minSdkVersion = 15
+    targetSdkVersion = 24
+    compileSdkVersion = 24
+    buildToolsVersion = "24.0.1"
+    versionCode = 1
+    versionName = "1.0"
+
+    libAppCompat = "com.android.support:appcompat-v7:${supportVersion}"
+    libCardview = "com.android.support:cardview-v7:${supportVersion}"
+    libRecyclerview = "com.android.support:recyclerview-v7:${supportVersion}"
+    libGridlayout = "com.android.support:gridlayout-v7:${supportVersion}"
+    libDesign = "com.android.support:design:${supportVersion}"
+    libDexMulti = "com.android.support:multidex:${multidexVersion}"
+    //retrofit
+    libRetrofit = "com.squareup.retrofit2:retrofit:${retrofitVersion}"
+    libRetrofitCoverterFastjson = "org.ligboy.retrofit2:converter-fastjson:${retrofitVersion}"
+    libRetrofitAdapter = "com.squareup.retrofit2:adapter-rxjava:${retrofitVersion}"
+
+    //okhttp
+    libOkhttp = "com.squareup.okhttp3:okhttp:${okhttpVersion}"
+    libOkhttpLogInterceptor = "com.squareup.okhttp3:logging-interceptor:${okhttpVersion}"
+    //cookie 持久化
+    libOkhttpCooker = "com.github.franmontiel:PersistentCookieJar:${okhttpCookieVersion}"
+
+    //glide
+    libGlide = "com.github.bumptech.glide:glide:${glideVersion}"
+    libGlideTranformation = "jp.wasabeef:glide-transformations:${glideTransformationVersion}"
+
+    //Rx
+    libRxJava = "io.reactivex:rxjava:${rxVersion}"
+    libRxAndroid = "io.reactivex:rxandroid:${rxVersion}"
+    //RxLifeCycle
+    libRxLife = "com.trello:rxlifecycle:${rxLifeVersion}"
+    libRxLifeComponent = "com.trello:rxlifecycle-components:${rxLifeVersion}"
+    //RxCache
+    libRxCache= "com.github.VictorAlbertos.RxCache:runtime:${rxCacheVersion}"
+    libRxCacheJackson= "com.github.VictorAlbertos.Jolyglot:jackson:${rxCacheJacksonVersion}"
+
+    //fastjson
+    libFastJson="com.alibaba:fastjson:${fastjsonVersion}"
+}
