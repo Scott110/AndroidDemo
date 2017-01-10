@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ripple xmlns:android="http://schemas.android.com/apk/res/android"
+    android:color="@color/item_pressed_color"><!-- 按压的颜色 -->
+    <!-- 底部背景的不要添加透明的item做背景，其一是没有意义，第二会出现无法显示按压效果的问题 -->
+    <!-- <item>
+         <shape
+             android:shape="rectangle">
+             <solid android:color="@color/item_default_color" />
+         </shape>
+     </item>-->
+</ripple>

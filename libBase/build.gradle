@@ -1,0 +1,69 @@
+apply plugin: 'com.android.library'
+apply plugin: 'com.neenbedankt.android-apt'
+
+android {
+    compileSdkVersion rootProject.ext.compileSdkVersion
+    buildToolsVersion rootProject.ext.buildToolsVersion
+
+    defaultConfig {
+        minSdkVersion rootProject.ext.minSdkVersion
+        targetSdkVersion rootProject.ext.targetSdkVersion
+        versionCode rootProject.ext.versionCode
+        versionName rootProject.ext.versionName
+        testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
+    }
+    buildTypes {
+        release {
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+        }
+    }
+
+}
+
+
+dependencies {
+    compile fileTree(include: ['*.jar'], dir: 'libs')
+    androidTestCompile('com.android.support.test.espresso:espresso-core:2.2.2', {
+        exclude group: 'com.android.support', module: 'support-annotations'
+    })
+    testCompile 'junit:junit:4.12'
+    compile rootProject.ext.libAppCompat
+    //retrofit
+    compile rootProject.ext.libRetrofit
+    compile rootProject.ext.libRetrofitCoverterFastjson
+    compile rootProject.ext.libRetrofitAdapter
+
+    //okhttp
+    compile rootProject.ext.libOkhttp
+    compile rootProject.ext.libOkhttpLogInterceptor
+    //cookie 管理
+    compile rootProject.ext.libOkhttpCooker
+    //glide
+    compile rootProject.ext.libGlide
+    compile rootProject.ext.libGlideOkhttpModule
+    compile rootProject.ext.libGlideTranformation
+    //Rx
+    compile rootProject.ext.libRxJava
+    compile rootProject.ext.libRxAndroid
+    //RxLifeCycle
+    compile rootProject.ext.libRxLife
+    compile rootProject.ext.libRxLifeComponent
+    //fastjson
+    compile rootProject.ext.libFastJson
+    //fragmentation
+    compile rootProject.ext.libFragmentation
+    //ButterKnife
+    compile rootProject.ext.libButterKnife
+    //eventBus
+    compile rootProject.ext.libEventBus
+
+    //dagger2
+    compile rootProject.ext.libDagger2
+    apt rootProject.ext.aptDagger2
+
+    //activityRouter
+    compile rootProject.ext.libActivityRouter
+
+    compile project(':libstyle')
+}

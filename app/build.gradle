@@ -3,6 +3,7 @@ apply plugin: 'com.neenbedankt.android-apt'
 apply plugin: 'realm-android'
 
 android {
+
     compileSdkVersion rootProject.ext.compileSdkVersion
     buildToolsVersion rootProject.ext.buildToolsVersion
     defaultConfig {
@@ -13,25 +14,47 @@ android {
         versionName rootProject.ext.versionName
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
     }
+
+
+    signingConfigs {
+        config {
+            keyAlias KEY_ALIAS
+            keyPassword KEY_PASSWORD
+            storePassword KEYSTORE_PASSWORD
+            storeFile file(KEYSTORE_PATH)
+        }
+    }
     buildTypes {
         release {
-            minifyEnabled false
+            minifyEnabled true
+            zipAlignEnabled true
+            shrinkResources true
+            signingConfig signingConfigs.config
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }
     }
 
     packagingOptions {
-        exclude 'META-INF/DEPENDENCIES'
-        exclude 'META-INF/NOTICE'
-        exclude 'META-INF/LICENSE'
-        exclude 'META-INF/LICENSE.txt'
-        exclude 'META-INF/NOTICE.txt'
+            exclude 'META-INF/ASL2.0'
+            exclude 'META-INF/DEPENDENCIES'
+            exclude 'META-INF/NOTICE'
+            exclude 'META-INF/LICENSE'
+            exclude 'META-INF/LICENSE.txt'
+            exclude 'META-INF/NOTICE.txt'
+            exclude 'META-INF/notice.txt'
+            exclude 'META-INF/license.txt'
     }
 
     lintOptions {
+        abortOnError false
         warning 'InvalidPackage'
     }
 
+
+    dexOptions {
+        preDexLibraries = false
+        javaMaxHeapSize "4g"
+    }
 
     splits {
         //剔除对应的so 文件
@@ -53,12 +76,14 @@ dependencies {
     testCompile 'junit:junit:4.12'
     androidTestCompile 'com.google.code.findbugs:jsr305:3.0.1'
 
-    compile project(':commonlib')
     compile rootProject.ext.libAppCompat
 
     //dagger2
-    apt 'com.google.dagger:dagger-compiler:2.7'
-    compile 'com.google.dagger:dagger:2.7'
-    provided 'javax.annotation:jsr250-api:1.0'
+    apt rootProject.ext.aptDagger2
+    //ButterKnife
+    apt rootProject.ext.aptButterKnife
+    //activityRouter
+    apt rootProject.ext.aptActivityRouter
 
+    compile project(':libBase')
 }

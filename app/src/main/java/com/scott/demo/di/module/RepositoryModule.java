@@ -48,11 +48,11 @@ public class RepositoryModule {
         return retrofit;
     }
 
-    @Provides
+  /*  @Provides
     protected File provideCacheFile() {
         File file = CacheUtils.getHttpCacheFile(mContext);
         return file;
-    }
+    }*/
 
    /* @Provides
     @Singleton
