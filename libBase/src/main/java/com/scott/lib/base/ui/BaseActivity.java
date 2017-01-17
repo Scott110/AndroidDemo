@@ -4,7 +4,7 @@ import android.os.Bundle;
 import android.support.annotation.Nullable;
 
 import com.scott.lib.R;
-import com.scott.lib.modle.event.AppExitEvent;
+import com.scott.lib.data.event.AppExitEvent;
 
 import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;

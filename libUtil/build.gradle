@@ -1,5 +1,4 @@
 apply plugin: 'com.android.library'
-apply plugin: 'com.neenbedankt.android-apt'
 
 android {
     compileSdkVersion rootProject.ext.compileSdkVersion
@@ -18,34 +17,12 @@ android {
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }
     }
-
 }
 
-
 dependencies {
-    compile fileTree(include: ['*.jar'], dir: 'libs')
+    compile fileTree(dir: 'libs', include: ['*.jar'])
     androidTestCompile('com.android.support.test.espresso:espresso-core:2.2.2', {
         exclude group: 'com.android.support', module: 'support-annotations'
     })
-
     compile rootProject.ext.libAppCompat
-    compile rootProject.ext.libRecyclerview
-    //glide
-    compile rootProject.ext.libGlide
-    compile rootProject.ext.libGlideOkhttpModule
-    compile rootProject.ext.libGlideTranformation
-    //fragmentation
-    compile rootProject.ext.libFragmentation
-    //ButterKnife
-    compile rootProject.ext.libButterKnife
-    //eventBus
-    compile rootProject.ext.libEventBus
-    //dagger2
-    compile rootProject.ext.libDagger2
-    apt rootProject.ext.aptDagger2
-    //activityRouter
-    compile rootProject.ext.libActivityRouter
-
-    compile project(':libstyle')
-    compile project(':libHttp')
 }

@@ -6,6 +6,13 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.scott.lib.base.mvp.IBaseView;
+import com.scott.lib.widget.varyview.DefaultEmptyView;
+import com.scott.lib.widget.varyview.DefaultErroView;
+import com.scott.lib.widget.varyview.DefaultLoadingView;
+import com.scott.lib.widget.varyview.DefaultNetErroView;
+import com.scott.lib.widget.varyview.VaryViewHelperController;
+
 import butterknife.ButterKnife;
 import butterknife.Unbinder;
 import me.yokeyword.fragmentation.SupportFragment;
@@ -14,9 +21,10 @@ import me.yokeyword.fragmentation.SupportFragment;
  * Created by scott_he on 16/10/17.
  */
 
-public abstract class BaseFragment extends SupportFragment {
+public abstract class BaseFragment extends SupportFragment implements IBaseView {
     public final String TAG = this.getClass().getSimpleName();
     Unbinder unBinder;
+    VaryViewHelperController mController;
 
 
     @Nullable
@@ -45,6 +53,87 @@ public abstract class BaseFragment extends SupportFragment {
         super.onLazyInitView(savedInstanceState);
     }
 
+
+    //初始化各种状态切换View
+    void initVaryView(View contenView) {
+        mController = new VaryViewHelperController
+                .Builder().setContentView(contenView)
+                .setLoadingView(new DefaultLoadingView(_mActivity))
+                .setEmptyView(new DefaultEmptyView(_mActivity))
+                .setErrorView(new DefaultErroView(_mActivity))
+                .setNetworkErrorView(new DefaultNetErroView(_mActivity))
+                .setViewClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        retry();
+                    }
+                }).builder();
+    }
+
+
+    public void setEmptyView(View view) {
+        if (mController == null)
+            return;
+        mController.setEmptyView(view);
+    }
+
+    public void setErrorView(View view) {
+        if (mController == null)
+            return;
+        mController.setErroView(view);
+    }
+
+    public void setNetErrorView(View view) {
+        if (mController == null)
+            return;
+        mController.setNetErroView(view);
+    }
+
+    public void setLodingView(View view) {
+        if (mController == null)
+            return;
+        mController.setLoadingView(view);
+    }
+
+    @Override
+    public void showLoading() {
+        if (mController == null)
+            return;
+        mController.showLoadingView();
+    }
+
+    @Override
+    public void showEmpty() {
+        if (mController == null)
+            return;
+        mController.showEmptyView();
+    }
+
+    @Override
+    public void showNetWorkErro() {
+        if (mController == null)
+            return;
+        mController.showNetworkErrorView();
+    }
+
+    @Override
+    public void showErro() {
+        if (mController == null)
+            return;
+        mController.showErrorView();
+    }
+
+    @Override
+    public void restorView() {
+        if (mController == null)
+            return;
+        mController.showContentView();
+    }
+
+    @Override
+    public void retry() {
+
+    }
 
     @Override
     public void onDestroyView() {
