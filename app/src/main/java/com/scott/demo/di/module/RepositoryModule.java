@@ -2,8 +2,6 @@ package com.scott.demo.di.module;
 
 import android.content.Context;
 
-import com.scott.lib.api.remote.RemoteApiUtil;
-import com.scott.lib.util.CacheUtils;
 
 import java.io.File;
 
@@ -33,11 +31,11 @@ public class RepositoryModule {
     public String provideString() {
         return baseUrl;
     }
-
+/*
     @Provides
     @Singleton
     protected OkHttpClient provideClient() {
-        OkHttpClient client = RemoteApiUtil.getClient(mContext);
+        //OkHttpClient client = RemoteApiUtil.getClient(mContext);
         return client;
     }
 
@@ -46,7 +44,7 @@ public class RepositoryModule {
     protected Retrofit provideRetrofit(OkHttpClient client) {
         Retrofit retrofit = RemoteApiUtil.getInstance(client, baseUrl);
         return retrofit;
-    }
+    }*/
 
   /*  @Provides
     protected File provideCacheFile() {

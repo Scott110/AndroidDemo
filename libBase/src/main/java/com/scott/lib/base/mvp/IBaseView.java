@@ -5,7 +5,6 @@ package com.scott.lib.base.mvp;
  */
 
 public interface IBaseView<T> extends com.scott.libhttp.IBaseView {
-    public void setPresenter(T presenter);
 
 
 }

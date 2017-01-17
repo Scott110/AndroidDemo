@@ -23,10 +23,10 @@ import com.scott.lib.imageloader.SourceReadyListener;
 import com.scott.lib.imageloader.glide.glideprogress.ProgressLoadListener;
 import com.scott.lib.imageloader.glide.glideprogress.ProgressModelLoader;
 import com.scott.lib.imageloader.glide.glideprogress.ProgressUIListener;
-import com.scott.lib.util.CacheUtils;
-import com.scott.lib.util.FileUtils;
-import com.scott.lib.util.NetworkUtils;
-import com.scott.lib.util.StringUtils;
+import com.scott.util.CacheUtils;
+import com.scott.util.FileUtils;
+import com.scott.util.NetworkUtils;
+import com.scott.util.StringUtils;
 
 import java.io.File;
 import java.io.FileInputStream;
