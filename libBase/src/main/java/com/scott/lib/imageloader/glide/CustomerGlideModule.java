@@ -3,7 +3,7 @@ package com.scott.lib.imageloader.glide;
 import android.content.Context;
 
 import com.bumptech.glide.GlideBuilder;
-import com.bumptech.glide.integration.okhttp.OkHttpGlideModule;
+import com.bumptech.glide.integration.okhttp3.OkHttpGlideModule;
 import com.bumptech.glide.load.engine.bitmap_recycle.LruBitmapPool;
 import com.bumptech.glide.load.engine.cache.LruResourceCache;
 

@@ -1,4 +1,4 @@
-package com.scott.libhttp.http.interceptor;
+package com.scott.libhttp.interceptor;
 
 import android.content.Context;
 

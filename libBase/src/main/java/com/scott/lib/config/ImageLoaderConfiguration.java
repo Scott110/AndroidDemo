@@ -1,8 +1,9 @@
-package com.scott.lib.imageloader;
+package com.scott.lib.config;
 
 import android.widget.ImageView;
 
 import com.scott.lib.R;
+import com.scott.lib.imageloader.ImageLoaderUtil;
 
 /**
  * author: heshantao

@@ -1,5 +1,6 @@
 apply plugin: 'com.android.library'
 apply plugin: 'com.neenbedankt.android-apt'
+apply plugin: 'realm-android'
 
 android {
     compileSdkVersion rootProject.ext.compileSdkVersion
@@ -19,32 +20,34 @@ android {
         }
     }
 
+    dataBinding{
+        enabled=true
+    }
+
 }
 
 
 dependencies {
     compile fileTree(include: ['*.jar'], dir: 'libs')
-    androidTestCompile('com.android.support.test.espresso:espresso-core:2.2.2', {
-        exclude group: 'com.android.support', module: 'support-annotations'
-    })
 
-    compile rootProject.ext.libAppCompat
-    compile rootProject.ext.libRecyclerview
+    compile supportDependencies.appCompat
+    compile supportDependencies.recyclerView
+
     //glide
-    compile rootProject.ext.libGlide
-    compile rootProject.ext.libGlideOkhttpModule
-    compile rootProject.ext.libGlideTranformation
+    compile glideDependencies.glide
+    compile glideDependencies.okhttpModule
+
     //fragmentation
-    compile rootProject.ext.libFragmentation
+    compile fragmentationDependencies.fragmentation
     //ButterKnife
-    compile rootProject.ext.libButterKnife
+    compile butterKnifeDependencies.butterKnife
     //eventBus
-    compile rootProject.ext.libEventBus
+    compile eventBusDependencies.eventBus
     //dagger2
-    compile rootProject.ext.libDagger2
-    apt rootProject.ext.aptDagger2
+    compile dagger2Dependencies.dagger2
+    apt dagger2Dependencies.compiler
     //activityRouter
-    compile rootProject.ext.libActivityRouter
+    compile activityRouterDependencies.activityRouter
 
     compile project(':libstyle')
     compile project(':libHttp')

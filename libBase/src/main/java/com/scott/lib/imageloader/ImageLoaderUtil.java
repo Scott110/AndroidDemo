@@ -2,6 +2,7 @@ package com.scott.lib.imageloader;
 
 import android.content.Context;
 
+import com.scott.lib.config.ImageLoaderConfiguration;
 import com.scott.lib.imageloader.glide.GlideImageLoaderStrategy;
 import com.scott.lib.imageloader.glide.glideprogress.ProgressLoadListener;
 

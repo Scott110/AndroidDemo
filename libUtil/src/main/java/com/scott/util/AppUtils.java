@@ -12,7 +12,7 @@ import android.net.Uri;
 
 public class AppUtils {
 
-    //获得app 版本号
+    //获得app 版本名
     public static String getVersionName(Context context) {
         String version = null;
         try {
@@ -23,6 +23,20 @@ public class AppUtils {
             e.printStackTrace();
         }
         return version;
+    }
+
+
+    //获得app 版本号
+    public static int getVersionCode(Context context) {
+        int versionCode =0;
+        try {
+            PackageManager packageManager = context.getPackageManager();
+            PackageInfo packInfo = packageManager.getPackageInfo(context.getPackageName(), 0);
+            versionCode = packInfo.versionCode;
+        } catch (PackageManager.NameNotFoundException e) {
+            e.printStackTrace();
+        }
+        return versionCode;
     }
 
 

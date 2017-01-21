@@ -1,4 +1,4 @@
-package com.scott.libhttp.http;
+package com.scott.libhttp.manager;
 
 import android.content.Context;
 
@@ -6,8 +6,9 @@ import com.franmontiel.persistentcookiejar.PersistentCookieJar;
 import com.franmontiel.persistentcookiejar.cache.SetCookieCache;
 import com.franmontiel.persistentcookiejar.persistence.SharedPrefsCookiePersistor;
 import com.scott.libhttp.LibConfig;
-import com.scott.libhttp.http.interceptor.CacheInterceptor;
-import com.scott.libhttp.http.interceptor.HeaderInterceptor;
+import com.scott.libhttp.api.BaseApi;
+import com.scott.libhttp.interceptor.CacheInterceptor;
+import com.scott.libhttp.interceptor.HeaderInterceptor;
 import com.scott.util.CacheUtils;
 
 import okhttp3.Cache;
@@ -15,13 +16,14 @@ import okhttp3.OkHttpClient;
 import okhttp3.logging.HttpLoggingInterceptor;
 import retrofit2.Retrofit;
 import retrofit2.adapter.rxjava.RxJavaCallAdapterFactory;
-import retrofit2.converter.fastjson.FastJsonConverterFactory;
+import retrofit2.converter.gson.GsonConverterFactory;
 
 /**
- * Created by scott_he on 16/10/17.
+ * author: heshantao
+ * data: 2017/1/18.
  */
 
-public class RemoteApiUtil {
+public class HttpManager {
 
     public static OkHttpClient getClient(Context context) {
         HttpLoggingInterceptor loggingInterceptor = new HttpLoggingInterceptor();
@@ -47,7 +49,7 @@ public class RemoteApiUtil {
     public static Retrofit getInstance(OkHttpClient client, String baseUrl) {
         Retrofit retrofit = new Retrofit.Builder()
                 .baseUrl(baseUrl)
-                .addConverterFactory(FastJsonConverterFactory.create())
+                .addConverterFactory(GsonConverterFactory.create())
                 .addCallAdapterFactory(RxJavaCallAdapterFactory.create())
                 .client(client)
                 .build();
@@ -55,4 +57,25 @@ public class RemoteApiUtil {
     }
 
 
+    public void doHttpDeal(BaseApi basePar) {
+
+       /* *//*rx处理*//*
+        RxSubscriber subscriber = new RxSubscriber(basePar);
+        Observable observable = basePar.getObservable(retrofit)
+                *//*失败后的retry配置*//*
+                .retryWhen(new RetryWhenNetworkException())
+                *//*生命周期管理*//*
+//                .compose(basePar.getRxAppCompatActivity().bindToLifecycle())
+                .compose(basePar.getRxAppCompatActivity().bindUntilEvent(ActivityEvent.DESTROY))
+                *//*http请求线程*//*
+                .subscribeOn(Schedulers.io())
+                .unsubscribeOn(Schedulers.io())
+                *//*回调线程*//*
+                .observeOn(AndroidSchedulers.mainThread())
+                *//*结果判断*//*
+                .map(basePar);
+
+        *//*数据回调*//*
+        observable.subscribe(subscriber);*/
+    }
 }

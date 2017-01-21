@@ -14,15 +14,6 @@ public abstract class HttpOnNextCallback<T> {
     public abstract void onNext(T t);
 
     /**
-     * 緩存回調結果
-     *
-     * @param string
-     */
-    public void onCacheNext(String string) {
-
-    }
-
-    /**
      * 失败或者错误方法
      * 主动调用，更加灵活
      *

@@ -21,26 +21,22 @@ android {
 
 dependencies {
     compile fileTree(include: ['*.jar'], dir: 'libs')
-    androidTestCompile('com.android.support.test.espresso:espresso-core:2.2.2', {
-        exclude group: 'com.android.support', module: 'support-annotations'
-    })
-    compile rootProject.ext.libAppCompat
+
+    compile supportDependencies.appCompat
     //retrofit
-    compile rootProject.ext.libRetrofit
-    compile rootProject.ext.libRetrofitCoverterFastjson
-    compile rootProject.ext.libRetrofitAdapter
+    compile retrofitDependencies.retrofit
+    compile retrofitDependencies.gson
+    compile retrofitDependencies.rxAdapterJava
     //okhttp
-    compile rootProject.ext.libOkhttp
-    compile rootProject.ext.libOkhttpLogInterceptor
+    compile okhttpDependencies.okhttp
+    compile okhttpDependencies.logInteceptor
     //cookie 管理
-    compile rootProject.ext.libOkhttpCooker
+    compile okhttpDependencies.cookie
     //Rx
-    compile rootProject.ext.libRxJava
-    compile rootProject.ext.libRxAndroid
+    compile rxDependencies.java
+    compile rxDependencies.android
     //RxLifeCycle
-    compile rootProject.ext.libRxLife
-    compile rootProject.ext.libRxLifeComponent
-    //fastjson
-    compile rootProject.ext.libFastJson
+    compile rxLifeDependencies.life
+    compile rxLifeDependencies.components
     compile project(':libUtil')
 }

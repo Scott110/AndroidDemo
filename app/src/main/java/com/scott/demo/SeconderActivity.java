@@ -28,6 +28,7 @@ public class SeconderActivity extends BaseActivity {
     public void initData() {
         String age = getIntent().getStringExtra("age");
         Toast.makeText(this, "多大了" + age, Toast.LENGTH_SHORT).show();
+        
     }
 
     @Override

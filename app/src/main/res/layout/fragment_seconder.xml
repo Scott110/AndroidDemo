@@ -1,12 +1,103 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:orientation="vertical">
+<layout>
 
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="通过链路跳转的Activity" />
+    <data>
 
-</LinearLayout>
+        <import type="java.util.ArrayList" />
+
+        <import type="java.util.HashMap" />
+
+        <import type="com.scott.demo.bean.Student" />
+
+        <import type="com.scott.demo.bean.Animal" />
+
+        <import type="com.scott.demo.bean.Item" />
+
+        <import type="com.scott.demo.EventHandle" />
+
+        <import type="com.scott.demo.SeconderFragment" />
+
+        <variable
+            name="txt"
+            type="String" />
+
+        <variable
+            name="age"
+            type="int" />
+
+        <variable
+            name="stu"
+            type="Student" />
+
+
+        <variable
+            name="anim"
+            type="Animal" />
+
+        <variable
+            name="item"
+            type="Item" />
+
+
+        <variable
+            name="list"
+            type="ArrayList&lt;String>" />
+
+        <variable
+            name="map"
+            type="HashMap&lt;String,String>" />
+
+        <variable
+            name="mapKey"
+            type="String" />
+
+        <variable
+            name="handle"
+            type="EventHandle" />
+
+        <variable
+            name="fragment"
+            type="SeconderFragment" />
+
+        <variable
+            name="url"
+            type="String" />
+
+    </data>
+
+    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+
+        <TextView
+            android:id="@+id/name"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@{item.qq}" />
+
+
+        <ImageView
+            android:id="@+id/iv"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:scaleType="centerCrop"
+            app:imageUrl="@{url}" />
+
+
+        <Button
+            android:id="@+id/btn"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:onClick="@{fragment::onBtnClick}"
+            android:text="@{@string/app_name}" />
+
+
+        <android.support.v7.widget.RecyclerView
+            android:id="@+id/rlv"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent" />
+
+    </LinearLayout>
+</layout>

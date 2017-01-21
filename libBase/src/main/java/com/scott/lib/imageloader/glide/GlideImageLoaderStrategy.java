@@ -16,7 +16,7 @@ import com.bumptech.glide.load.resource.gif.GifDrawable;
 import com.bumptech.glide.request.RequestListener;
 import com.bumptech.glide.request.target.Target;
 import com.scott.lib.imageloader.BaseImageLoaderStrategy;
-import com.scott.lib.imageloader.ImageLoaderConfiguration;
+import com.scott.lib.config.ImageLoaderConfiguration;
 import com.scott.lib.imageloader.ImageLoaderUtil;
 import com.scott.lib.imageloader.ImageSaveListener;
 import com.scott.lib.imageloader.SourceReadyListener;

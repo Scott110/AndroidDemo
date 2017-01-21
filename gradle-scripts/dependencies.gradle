@@ -1,0 +1,86 @@
+ext {
+    //version
+    supportVersion = '24.2.1'
+    multidexVersion = '1.0.1'
+    retrofitVersion = '2.1.0'
+    okhttpVersion = '3.4.1'
+    okhttpCookieVersion = 'v1.0.0'
+    glideVersion = '3.7.0'
+    glideOkhttpModuleVersion = '1.4.0@aar'
+    rxVersion = '1.2.1'
+    rxLifeVersion = '0.8.0'
+    fragmentationVersion = '0.9.3'
+    butterKnifeVersion = '8.4.0'
+    eventBusVersion = '3.0.0'
+    dagger2Version = '2.7'
+    activityRouterVersion = '1.2.1'
+    activityRouterAptVersion = '1.1.7'
+
+    //Packages
+    supportPackage = 'com.android.support'
+    retrofitPackage = 'com.squareup.retrofit2'
+    okhttpPackage = 'com.squareup.okhttp3'
+    okhttpCookiePackage = 'com.github.franmontiel'
+    glidePackage = 'com.github.bumptech.glide'
+    rxPackage = 'io.reactivex'
+    rxLifePackage = 'com.trello'
+    fragmentationPackage='me.yokeyword'
+    butterKnifePackage='com.jakewharton'
+    eventBusPackage='org.greenrobot'
+    dagger2Package='com.google.dagger'
+    activityRouterPackage='com.github.mzule.activityrouter'
+
+
+    supportDependencies = [design           : buildDependency(supportPackage, 'design', supportVersion),
+                           recyclerView     : buildDependency(supportPackage, 'recyclerview-v7', supportVersion),
+                           cardView         : buildDependency(supportPackage, 'cardview-v7', supportVersion),
+                           appCompat        : buildDependency(supportPackage, 'appcompat-v7', supportVersion),
+                           supportAnnotation: buildDependency(supportPackage, 'support-annotations', supportVersion),
+                           multidex         : buildDependency(supportPackage, 'multidex', multidexVersion)
+
+    ]
+
+    retrofitDependencies = [retrofit     : buildDependency(retrofitPackage, 'retrofit', retrofitVersion),
+                            gson         : buildDependency(retrofitPackage, 'converter-gson', retrofitVersion),
+                            rxAdapterJava: buildDependency(retrofitPackage, 'adapter-rxjava', retrofitVersion)
+    ]
+
+    okhttpDependencies = [okhttp       : buildDependency(okhttpPackage, 'okhttp', okhttpVersion),
+                          logInteceptor: buildDependency(okhttpPackage, 'logging-interceptor', okhttpVersion),
+                          cookie       : buildDependency(okhttpCookiePackage, 'PersistentCookieJar', okhttpCookieVersion)
+    ]
+
+    glideDependencies = [glide       : buildDependency(glidePackage, 'glide', glideVersion),
+                         okhttpModule: buildDependency(glidePackage, 'okhttp3-integration', glideOkhttpModuleVersion)
+    ]
+
+    rxDependencies = [java   : buildDependency(rxPackage, 'rxjava', rxVersion),
+                      android: buildDependency(rxPackage, 'rxandroid', rxVersion)
+    ]
+
+    rxLifeDependencies = [life   : buildDependency(rxLifePackage, 'rxlifecycle', rxLifeVersion),
+                          components: buildDependency(rxLifePackage, 'rxlifecycle-components', rxLifeVersion)
+    ]
+
+    fragmentationDependencies = [fragmentation   : buildDependency(fragmentationPackage, 'fragmentation', fragmentationVersion)]
+
+    butterKnifeDependencies = [butterKnife   : buildDependency(butterKnifePackage, 'butterknife', butterKnifeVersion),
+                               compiler: buildDependency(butterKnifePackage, 'butterknife-compiler', butterKnifeVersion)
+    ]
+
+    eventBusDependencies = [eventBus   : buildDependency(eventBusPackage, 'eventbus', eventBusVersion)
+    ]
+
+    dagger2Dependencies = [dagger2   : buildDependency(dagger2Package, 'dagger', dagger2Version),
+                           compiler: buildDependency(dagger2Package, 'dagger-compiler', dagger2Version)
+    ]
+
+    activityRouterDependencies = [activityRouter   : buildDependency(activityRouterPackage, 'activityrouter', activityRouterVersion),
+                                  compiler: buildDependency(activityRouterPackage, 'compiler', activityRouterAptVersion)
+    ]
+
+}
+
+String buildDependency(String pack, String dependency, String version) {
+    return "${pack}:${dependency}:${version}"
+}
