@@ -57,6 +57,8 @@ public class RecyclerViewConfiguration<T> {
     * 另一种是继承 BindingRecyclerViewAdapter  然后在里面可以处理各种事件(如绑定点击事件)
     * */
     private BindingRecyclerViewAdapter adapter;
+    //自定义Adapter名称包含包名"com.scott.demo.adapter.CustomerAdapter"
+    private String adapterName;
 
 
     public RecyclerViewConfiguration(Builder builder) {
@@ -68,6 +70,7 @@ public class RecyclerViewConfiguration<T> {
         this.layoutManager = builder.layoutManager;
         this.itemView = builder.itemView;
         this.selector = builder.selector;
+        this.adapterName = builder.adapterName;
     }
 
 
@@ -136,6 +139,14 @@ public class RecyclerViewConfiguration<T> {
         this.selector = selector;
     }
 
+    public String getAdapterName() {
+        return adapterName;
+    }
+
+    public void setAdapterName(String adapterName) {
+        this.adapterName = adapterName;
+    }
+
     public static class Builder<T> {
         private ObservableArrayList<T> items;
         private RecyclerView mRlv;
@@ -145,6 +156,7 @@ public class RecyclerViewConfiguration<T> {
         private ItemView itemView;
         private ItemViewSelector<T> selector;
         private BindingRecyclerViewAdapter<T> adapter;
+        private String adapterName;
 
         public Builder() {
 
@@ -189,6 +201,11 @@ public class RecyclerViewConfiguration<T> {
 
         public Builder setAdapter(BindingRecyclerViewAdapter mAdapter) {
             this.adapter = mAdapter;
+            return this;
+        }
+
+        public Builder setAdapterName(String adapterName) {
+            this.adapterName = adapterName;
             return this;
         }
 

@@ -1,14 +1,12 @@
-package com.scott.lib.base.ui;
+package com.scott.lib.ui;
 
-import android.databinding.DataBindingUtil;
-import android.databinding.ViewDataBinding;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import com.scott.lib.base.mvp.IBaseView;
+import com.scott.lib.base.mvvm.IBaseView;
 import com.scott.lib.widget.varyview.DefaultEmptyView;
 import com.scott.lib.widget.varyview.DefaultErroView;
 import com.scott.lib.widget.varyview.DefaultLoadingView;

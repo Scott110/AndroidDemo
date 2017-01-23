@@ -1,4 +1,4 @@
-package com.scott.lib.base.ui;
+package com.scott.lib.ui;
 
 import android.os.Bundle;
 import android.support.annotation.Nullable;

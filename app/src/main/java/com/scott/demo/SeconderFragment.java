@@ -12,6 +12,7 @@ import android.util.Log;
 import android.view.View;
 import android.widget.Toast;
 
+import com.scott.demo.adapter.CustomerAdapter;
 import com.scott.demo.bean.Animal;
 import com.scott.demo.bean.Item;
 import com.scott.demo.bean.Person;
@@ -19,7 +20,7 @@ import com.scott.demo.bean.Student;
 import com.scott.demo.databinding.FragmentSeconderBinding;
 import com.scott.demo.databinding.ItemRedTxtBinding;
 import com.scott.lib.dBinding.EventHandler;
-import com.scott.lib.base.ui.BaseFragment;
+import com.scott.lib.ui.BaseFragment;
 import com.scott.lib.callback.DbindingEventCallback;
 import com.scott.lib.dBinding.adapter.BaseItemViewSelector;
 import com.scott.lib.dBinding.adapter.BindingRecyclerViewAdapter;
@@ -27,6 +28,7 @@ import com.scott.lib.dBinding.adapter.ItemView;
 import com.scott.lib.dBinding.adapter.ItemViewArg;
 import com.scott.lib.manager.LayoutManagers;
 
+import java.lang.reflect.Constructor;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -178,6 +180,8 @@ public class SeconderFragment extends BaseFragment implements DbindingEventCallb
 
     //自定义Adapter 可以进行点击效果
     class MyAdapter<Person> extends BindingRecyclerViewAdapter<Person> {
+        String name = "11111";
+
         public MyAdapter(@NonNull ItemViewArg<Person> arg) {
             super(arg);
         }
@@ -196,21 +200,59 @@ public class SeconderFragment extends BaseFragment implements DbindingEventCallb
             Log.d(TAG, "bound binding: " + binding + " at position: " + position);
 
         }
+
+
+        public String getName() {
+            return name;
+        }
     }
 
 
     public void onBtnClick(View view) {
-        Log.d(TAG, "onClick: hhhhhhTAOTAOTAOTAO");
+        // Log.d(TAG, "onClick: hhhhhhTAOTAOTAOTAO");
         //student.getSname("医大帮");
-        item.setQq("11111111111");
-        Person person = new Person();
-        person.setName("何善涛");
+        //item.setQq("11111111111");
+        //Person person = new Person();
+        //person.setName("何善涛");
         //persons.add(person);
         //persons.get(5).setName("何善涛");
         //persons.add(person);
 
         //persons.remove(1);
-        Person sub = (Person) (persons.get(5));
-        sub.setName("何善涛11-");
+        //Person sub = (Person) (persons.get(5));
+        //sub.setName("何善涛11-");
+
+        BindingRecyclerViewAdapter adapter = create("com.scott.demo.adapter.CustomerAdapter");
+        if (adapter instanceof CustomerAdapter) {
+            String name = ((CustomerAdapter) adapter).getName();
+            Toast.makeText(_mActivity, "通过反射获得的用户名" + name, Toast.LENGTH_SHORT).show();
+        }
+    }
+
+
+    public BindingRecyclerViewAdapter create(String className) {
+
+        BaseItemViewSelector<Person> selector = new BaseItemViewSelector<Person>() {
+            @Override
+            public void select(ItemView itemView, int position, Person item) {
+                if (position % 2 == 0) {
+                    itemView.set(BR.person, R.layout.item_text);
+                } else {
+                    itemView.set(BR.person, R.layout.item_red_txt);
+                }
+            }
+        };
+
+        ItemViewArg arg = ItemViewArg.of(selector);
+        try {
+            Class clazz = Class.forName(className);
+            Constructor<? extends BindingRecyclerViewAdapter> adapter =
+                    clazz.getDeclaredConstructor(ItemViewArg.class);
+            return adapter.newInstance(arg);
+        } catch (Throwable e) {
+            throw new RuntimeException(
+                    "Unable to create Adapter for" + className + e.getCause().getMessage(), e);
+        }
+
     }
 }

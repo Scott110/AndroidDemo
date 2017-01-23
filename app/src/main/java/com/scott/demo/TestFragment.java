@@ -1,10 +1,9 @@
 package com.scott.demo;
 
-import android.content.Intent;
 import android.os.Bundle;
 
 import com.github.mzule.activityrouter.router.Routers;
-import com.scott.lib.base.ui.BaseFragment;
+import com.scott.lib.ui.BaseFragment;
 
 import butterknife.OnClick;
 
@@ -34,5 +33,11 @@ public class TestFragment extends BaseFragment {
         Routers.open(getActivity(), "scott://seconder/12");
         //Intent intent = new Intent(getActivity(), SeconderActivity.class);
         //startActivity(intent);
+    }
+
+
+    @OnClick(R.id.skip_third_btn)
+    void onThirdClick() {
+        Routers.open(getActivity(), "scott://third");
     }
 }

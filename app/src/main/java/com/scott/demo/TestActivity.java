@@ -1,9 +1,7 @@
 package com.scott.demo;
 
-import com.github.mzule.activityrouter.router.Routers;
-import com.scott.lib.base.ui.BaseActivity;
+import com.scott.lib.ui.BaseActivity;
 
-import butterknife.OnClick;
 import me.yokeyword.fragmentation.SupportFragment;
 
 /**

@@ -1,7 +1,5 @@
 package com.scott.demo;
 
-import android.widget.Toast;
-
 import com.github.mzule.activityrouter.annotation.Router;
 import com.scott.lib.ui.BaseActivity;
 
@@ -9,11 +7,10 @@ import me.yokeyword.fragmentation.SupportFragment;
 
 /**
  * author: heshantao
- * data: 2017/1/9.
+ * data: 2017/1/22.
  */
-
-@Router("seconder/:age")
-public class SeconderActivity extends BaseActivity {
+@Router("third")
+public class ThirdActivity extends BaseActivity {
     @Override
     public int getLayoutId() {
         return R.layout.acitivity_test;
@@ -21,14 +18,12 @@ public class SeconderActivity extends BaseActivity {
 
     @Override
     public SupportFragment getRootFragment() {
-        return SeconderFragment.newInstance();
+        return ThirdFragment.newInstance();
     }
 
     @Override
     public void initData() {
-        String age = getIntent().getStringExtra("age");
-        Toast.makeText(this, "多大了" + age, Toast.LENGTH_SHORT).show();
-        
+
     }
 
     @Override

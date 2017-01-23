@@ -6,5 +6,7 @@
 
     <color name="item_pressed_color">#40000000</color>
     <color name="item_default_color">#00000000</color>
+    <!--默认分割线颜色-->
+    <color name="default_divider_line_color">#303F9F</color>
 
 </resources>
