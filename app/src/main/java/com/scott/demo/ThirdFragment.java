@@ -6,7 +6,9 @@ import android.os.Bundle;
 import android.support.v4.view.ViewPager;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
+import android.widget.Toast;
 
+import com.scott.demo.api.PersonApi;
 import com.scott.demo.bean.Person;
 import com.scott.demo.databinding.FragmentThirdBinding;
 import com.scott.lib.config.RecyclerViewConfiguration;
@@ -14,6 +16,8 @@ import com.scott.lib.dBinding.adapter.BaseItemViewSelector;
 import com.scott.lib.dBinding.adapter.ItemView;
 import com.scott.lib.manager.RlvConfigManager;
 import com.scott.lib.ui.BaseRlvFragment;
+import com.scott.libhttp.callback.HttpOnNextCallback;
+import com.scott.libhttp.manager.HttpManager;
 
 /**
  * author: heshantao
@@ -46,9 +50,25 @@ public class ThirdFragment extends BaseRlvFragment {
         vp = binding.vp;
 
         //initViewPage();
+
+        requestList();
     }
 
 
+    void requestList() {
+        PersonApi api = new PersonApi(callback, this);
+        api.setId("23");
+        HttpManager.doHttpDeal(api, _mActivity);
+    }
+
+
+    HttpOnNextCallback<Person> callback = new HttpOnNextCallback<Person>() {
+        @Override
+        public void onNext(Person person) {
+            Toast.makeText(_mActivity, "用户名" + person.getName(), Toast.LENGTH_SHORT).show();
+        }
+
+    };
 
 
     void initRecyclerView() {

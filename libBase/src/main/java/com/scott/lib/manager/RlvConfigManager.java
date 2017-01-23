@@ -59,7 +59,7 @@ public class RlvConfigManager<T> {
     }
 
 
-    //获得默认线性RecyclerView配置信息
+    //获得默认负载view的RecyclerView配置信息
     public RecyclerViewConfiguration mutileRecyclerConfig(RecyclerView recyclerView, ItemViewSelector selector,
                                                           ObservableArrayList<T> list, String adapterName) {
         Context context = recyclerView.getContext();

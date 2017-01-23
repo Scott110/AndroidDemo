@@ -5,11 +5,16 @@ import android.content.Context;
 import com.franmontiel.persistentcookiejar.PersistentCookieJar;
 import com.franmontiel.persistentcookiejar.cache.SetCookieCache;
 import com.franmontiel.persistentcookiejar.persistence.SharedPrefsCookiePersistor;
-import com.scott.libhttp.LibConfig;
+import com.scott.libhttp.constant.Constants;
 import com.scott.libhttp.api.BaseApi;
 import com.scott.libhttp.interceptor.CacheInterceptor;
 import com.scott.libhttp.interceptor.HeaderInterceptor;
+import com.scott.libhttp.rx.RetryWhenFun;
+import com.scott.libhttp.subscriber.RxSubscriber;
 import com.scott.util.CacheUtils;
+import com.trello.rxlifecycle.LifecycleProvider;
+import com.trello.rxlifecycle.android.FragmentEvent;
+import com.trello.rxlifecycle.android.RxLifecycleAndroid;
 
 import okhttp3.Cache;
 import okhttp3.OkHttpClient;
@@ -17,6 +22,9 @@ import okhttp3.logging.HttpLoggingInterceptor;
 import retrofit2.Retrofit;
 import retrofit2.adapter.rxjava.RxJavaCallAdapterFactory;
 import retrofit2.converter.gson.GsonConverterFactory;
+import rx.Observable;
+import rx.android.schedulers.AndroidSchedulers;
+import rx.schedulers.Schedulers;
 
 /**
  * author: heshantao
@@ -27,7 +35,7 @@ public class HttpManager {
 
     public static OkHttpClient getClient(Context context) {
         HttpLoggingInterceptor loggingInterceptor = new HttpLoggingInterceptor();
-        if (LibConfig.DEBUG) {
+        if (Constants.DEBUG) {
             loggingInterceptor.setLevel(HttpLoggingInterceptor.Level.BODY);
         } else {
             loggingInterceptor.setLevel(HttpLoggingInterceptor.Level.BASIC);
@@ -57,25 +65,24 @@ public class HttpManager {
     }
 
 
-    public void doHttpDeal(BaseApi basePar) {
+    public static void doHttpDeal(BaseApi basePar, Context context) {
 
-       /* *//*rx处理*//*
+        Retrofit retrofit = new Retrofit.Builder()
+                .baseUrl(basePar.getBaseUrl())
+                .addConverterFactory(GsonConverterFactory.create())
+                .addCallAdapterFactory(RxJavaCallAdapterFactory.create())
+                .client(getClient(context))
+                .build();
+
         RxSubscriber subscriber = new RxSubscriber(basePar);
         Observable observable = basePar.getObservable(retrofit)
-                *//*失败后的retry配置*//*
-                .retryWhen(new RetryWhenNetworkException())
-                *//*生命周期管理*//*
-//                .compose(basePar.getRxAppCompatActivity().bindToLifecycle())
-                .compose(basePar.getRxAppCompatActivity().bindUntilEvent(ActivityEvent.DESTROY))
-                *//*http请求线程*//*
+                .retryWhen(new RetryWhenFun())
+                .compose(basePar.getLifeProvider().bindUntilEvent(FragmentEvent.DESTROY))
                 .subscribeOn(Schedulers.io())
                 .unsubscribeOn(Schedulers.io())
-                *//*回调线程*//*
                 .observeOn(AndroidSchedulers.mainThread())
-                *//*结果判断*//*
                 .map(basePar);
 
-        *//*数据回调*//*
-        observable.subscribe(subscriber);*/
+        observable.subscribe(subscriber);
     }
 }

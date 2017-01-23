@@ -14,10 +14,10 @@ import me.yokeyword.fragmentation.SupportActivity;
 import me.yokeyword.fragmentation.SupportFragment;
 
 /**
- * Created by scott_he on 16/10/17.
+ * Created by scott_he on 16/10/17.RxFragment.java
  */
 
-public abstract class BaseActivity extends SupportActivity {
+public abstract class BaseActivity extends RxActivity {
     public final String TAG = this.getClass().getSimpleName();
 
     @Override

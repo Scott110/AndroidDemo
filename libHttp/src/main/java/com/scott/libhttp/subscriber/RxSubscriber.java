@@ -1,17 +1,24 @@
 package com.scott.libhttp.subscriber;
 
-import android.content.Context;
+import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentManager;
+import android.support.v7.app.AppCompatActivity;
 import android.support.v7.app.AppCompatDialogFragment;
 
+import com.google.gson.Gson;
 import com.scott.libhttp.IBaseView;
 import com.scott.libhttp.api.BaseApi;
+import com.scott.libhttp.ben.HttpResponseEntity;
 import com.scott.libhttp.callback.HttpOnNextCallback;
+import com.scott.libhttp.exception.ApiExecption;
 import com.scott.libhttp.manager.ExecptionManager;
 import com.scott.libhttp.manager.HttpDialogManager;
-import com.trello.rxlifecycle.components.support.RxAppCompatDialogFragment;
+import com.trello.rxlifecycle.LifecycleProvider;
 
 import java.lang.ref.SoftReference;
 
+import okhttp3.ResponseBody;
+import retrofit2.adapter.rxjava.HttpException;
 import rx.Subscriber;
 
 
@@ -29,22 +36,37 @@ public class RxSubscriber<T> extends Subscriber<T> {
     /* 软引用回调接口*/
     private SoftReference<HttpOnNextCallback> mSubscriberOnNextListener;
     /*软引用反正内存泄露*/
-    private SoftReference<RxAppCompatDialogFragment> mFragment;
+    private SoftReference<LifecycleProvider> lifeProvide;
     /*加载框可自己定义*/
     private AppCompatDialogFragment progressDialog;
     private IBaseView baseView;
     /*请求数据*/
-    private BaseApi api;
+    private BaseApi mApi;
     HttpDialogManager dialogManager;
 
     public RxSubscriber(BaseApi api) {
-        this.api = api;
+        this.mApi = api;
         this.mSubscriberOnNextListener = api.getCallback();
-        this.mFragment = new SoftReference<>(api.getRxAppCompatFragment());
-        if (mFragment.get() != null) {
-            dialogManager = new HttpDialogManager(mFragment.get().getFragmentManager());
-        }
+        this.lifeProvide = new SoftReference<>(api.getLifeProvider());
+        baseView = mApi.getmView();
+        initHttpDialogManager();
+        progressDialog = mApi.getProgressDialog();
         setShowPorgress(api.isShowProgressDialog());
+    }
+
+
+    private void initHttpDialogManager() {
+        if (lifeProvide.get() != null) {
+            FragmentManager manager = null;
+            if (lifeProvide.get() instanceof Fragment) {
+                manager = ((Fragment) lifeProvide.get()).getFragmentManager();
+            } else if (lifeProvide.get() instanceof AppCompatActivity) {
+                manager = ((AppCompatActivity) lifeProvide.get()).getSupportFragmentManager();
+            }
+            if (manager != null) {
+                dialogManager = new HttpDialogManager(manager);
+            }
+        }
     }
 
     /**
@@ -87,23 +109,33 @@ public class RxSubscriber<T> extends Subscriber<T> {
 
 
     private void showVaryLoadingView() {
-        if (!isShowLoadingView()) return;
+        if (!isShowLoadingView() || baseView == null) return;
         baseView.showLoading();
     }
 
 
     private void showVaryRestorView() {
-        if (!isShowLoadingView()) return;
+        if (!isShowLoadingView() || baseView == null) return;
         baseView.restorView();
+    }
+
+
+    private void showErroView() {
+        if (!isShowLoadingView() || baseView == null) return;
+        baseView.showErro();
+    }
+
+
+    private void showNetErroView() {
+        if (!isShowLoadingView() || baseView == null) return;
+        baseView.showNetWorkErro();
     }
 
     /**
      * 显示加载框
      */
     private void showProgressDialog() {
-        if (!isShowPorgress() || dialogManager == null) return;
-        Context context = mFragment.get().getActivity();
-        if (progressDialog == null || context == null) return;
+        if (!isShowPorgress() || dialogManager == null || progressDialog == null) return;
         dialogManager.showLoadingDialog(progressDialog);
 
     }
@@ -112,13 +144,34 @@ public class RxSubscriber<T> extends Subscriber<T> {
      * 隐藏加载框
      */
     private void dismissProgressDialog() {
-        if (!isShowPorgress() || dialogManager == null) return;
+        if (!isShowPorgress() || dialogManager == null || dialogManager == null) return;
         dialogManager.dissLoadingDialog();
     }
 
     private void dismissDialog() {
         dismissProgressDialog();
         showVaryRestorView();
+    }
+
+    //将http异常转化为Api 异常
+    private Throwable transformException(Throwable e) {
+        ResponseBody body = ((HttpException) e).response().errorBody();
+        ApiExecption execption;
+        HttpResponseEntity responseResult = null;
+        try {
+            Gson gson = new Gson();
+            responseResult = gson.fromJson(body.toString(), HttpResponseEntity.class);
+        } catch (Exception eo) {
+            showErroView();
+            eo.printStackTrace();
+        }
+
+        if (responseResult != null) {
+            execption = new ApiExecption(responseResult.getCode(), responseResult.getMessage());
+            e = execption;
+            showErroView();
+        }
+        return e;
     }
 
     @Override
@@ -140,7 +193,15 @@ public class RxSubscriber<T> extends Subscriber<T> {
 
     /*错误统一处理*/
     private void doErro(Throwable e) {
-        ExecptionManager.doExecption(e);
+        ExecptionManager manager = ExecptionManager.getInstance();
+        if (manager.isNetException(e)) {
+            showNetErroView();
+        } else if (manager.isApiException(e)) {
+            showErroView();
+        } else if (manager.isHttpException(e)) {
+            e = transformException(e);
+        }
+
         if (mSubscriberOnNextListener.get() != null) {
             mSubscriberOnNextListener.get().onError(e);
         }

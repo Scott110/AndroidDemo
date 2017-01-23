@@ -21,7 +21,7 @@ import me.yokeyword.fragmentation.SupportFragment;
  * Created by scott_he on 16/10/17.
  */
 
-public abstract class BaseFragment extends SupportFragment implements IBaseView {
+public abstract class BaseFragment extends RxFragment implements IBaseView {
     public final String TAG = this.getClass().getSimpleName();
     Unbinder unBinder;
     VaryViewHelperController mController;

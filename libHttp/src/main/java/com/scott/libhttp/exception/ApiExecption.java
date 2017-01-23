@@ -6,17 +6,23 @@ package com.scott.libhttp.exception;
  * API 调用异常
  */
 
-public class ApiExecption extends RuntimeException {
-    public ApiExecption(int resultCode) {
-        this(getApiExceptionMessage(resultCode));
+public class ApiExecption extends Exception {
+    private int code;
+    private String msg;
+
+    public ApiExecption(int code, String message) {
+        msg = message;
+        this.code = code;
     }
 
-    public ApiExecption(String detailMessage) {
-        super(detailMessage);
+    @Override
+    public String getMessage() {
+        return msg;
+    }
+
+    public int getCode() {
+        return code;
     }
 
 
-    private static String getApiExceptionMessage(int resultCode) {
-        return "erro";
-    }
 }

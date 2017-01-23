@@ -30,4 +30,9 @@ public class ThirdActivity extends BaseActivity {
     public void initView() {
 
     }
+
+
+    private void getPersonInfo(){
+
+    }
 }

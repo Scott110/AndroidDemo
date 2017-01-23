@@ -5,6 +5,9 @@ import android.support.v7.app.AppCompatDialogFragment;
 import com.scott.libhttp.IBaseView;
 import com.scott.libhttp.ben.HttpResponseEntity;
 import com.scott.libhttp.callback.HttpOnNextCallback;
+import com.scott.libhttp.constant.Constants;
+import com.scott.libhttp.exception.ApiExecption;
+import com.trello.rxlifecycle.LifecycleProvider;
 import com.trello.rxlifecycle.components.support.RxAppCompatActivity;
 import com.trello.rxlifecycle.components.support.RxAppCompatDialogFragment;
 
@@ -23,7 +26,7 @@ import rx.functions.Func1;
 public abstract class BaseApi<T> implements Func1<HttpResponseEntity<T>, T> {
     private final String TAG = this.getClass().getSimpleName();
     //rx生命周期管理
-    private SoftReference<RxAppCompatDialogFragment> rxAppCompatFragment;
+    private SoftReference<LifecycleProvider> lifecycleProvider;
     /*回调*/
     private SoftReference<HttpOnNextCallback> callback;
     /*是否能取消加载框*/
@@ -37,12 +40,12 @@ public abstract class BaseApi<T> implements Func1<HttpResponseEntity<T>, T> {
     /*各种状态View 切换的View接口*/
     private IBaseView mView;
     /*基础url*/
-    private String baseUrl = "";
+    private String baseUrl = Constants.Http.BASE_URL;
 
-    public BaseApi(HttpOnNextCallback mCallback, RxAppCompatDialogFragment rxAppCompatFragment) {
+    public BaseApi(HttpOnNextCallback mCallback, LifecycleProvider lifecycleProvider) {
         setCallback(mCallback);
-        setRxAppCompatActivity(rxAppCompatFragment);
-        setShowVaryLoadingView(true);
+        setLifeProvider(lifecycleProvider);
+        setShowVaryLoadingView(false);
         setShowProgressDialog(false);
     }
 
@@ -108,12 +111,12 @@ public abstract class BaseApi<T> implements Func1<HttpResponseEntity<T>, T> {
         * 获取Rx生命周期
         *
         */
-    public RxAppCompatDialogFragment getRxAppCompatFragment() {
-        return rxAppCompatFragment.get();
+    public LifecycleProvider getLifeProvider() {
+        return lifecycleProvider.get();
     }
 
-    public void setRxAppCompatActivity(RxAppCompatDialogFragment rxAppCompatFragment) {
-        this.rxAppCompatFragment = new SoftReference<RxAppCompatDialogFragment>(rxAppCompatFragment);
+    public void setLifeProvider(LifecycleProvider provider) {
+        this.lifecycleProvider = new SoftReference<LifecycleProvider>(provider);
     }
 
 
@@ -127,6 +130,13 @@ public abstract class BaseApi<T> implements Func1<HttpResponseEntity<T>, T> {
 
     @Override
     public T call(HttpResponseEntity<T> tHttpResponseEntity) {
+        if (tHttpResponseEntity.getCode() != Constants.Http.HTTP_OK_STATUS) {
+            try {
+                throw new ApiExecption(tHttpResponseEntity.getCode(), tHttpResponseEntity.getMessage());
+            } catch (ApiExecption apiExecption) {
+                apiExecption.printStackTrace();
+            }
+        }
         return tHttpResponseEntity.getData();
     }
 }
