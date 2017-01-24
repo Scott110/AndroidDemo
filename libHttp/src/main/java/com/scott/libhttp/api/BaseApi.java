@@ -42,8 +42,7 @@ public abstract class BaseApi<T> implements Func1<HttpResponseEntity<T>, T> {
     /*基础url*/
     private String baseUrl = Constants.Http.BASE_URL;
 
-    public BaseApi(HttpOnNextCallback mCallback, LifecycleProvider lifecycleProvider) {
-        setCallback(mCallback);
+    public BaseApi(LifecycleProvider lifecycleProvider) {
         setLifeProvider(lifecycleProvider);
         setShowVaryLoadingView(false);
         setShowProgressDialog(false);

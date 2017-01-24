@@ -17,8 +17,8 @@ import rx.Observable;
 public class PersonApi extends BaseApi<Person> {
     String id;
 
-    public PersonApi(HttpOnNextCallback mCallback, LifecycleProvider lifecycleProvider) {
-        super(mCallback, lifecycleProvider);
+    public PersonApi(LifecycleProvider lifecycleProvider) {
+        super(lifecycleProvider);
     }
 
 

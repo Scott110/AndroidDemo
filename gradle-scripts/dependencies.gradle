@@ -9,6 +9,7 @@ ext {
     glideOkhttpModuleVersion = '1.4.0@aar'
     rxVersion = '1.2.1'
     rxLifeVersion = '0.8.0'
+    rxPermissionVersion = '0.9.1@aar'
     fragmentationVersion = '0.9.3'
     butterKnifeVersion = '8.4.0'
     eventBusVersion = '3.0.0'
@@ -24,11 +25,12 @@ ext {
     glidePackage = 'com.github.bumptech.glide'
     rxPackage = 'io.reactivex'
     rxLifePackage = 'com.trello'
-    fragmentationPackage='me.yokeyword'
-    butterKnifePackage='com.jakewharton'
-    eventBusPackage='org.greenrobot'
-    dagger2Package='com.google.dagger'
-    activityRouterPackage='com.github.mzule.activityrouter'
+    rxPermissionPackage = 'com.tbruyelle.rxpermissions'
+    fragmentationPackage = 'me.yokeyword'
+    butterKnifePackage = 'com.jakewharton'
+    eventBusPackage = 'org.greenrobot'
+    dagger2Package = 'com.google.dagger'
+    activityRouterPackage = 'com.github.mzule.activityrouter'
 
 
     supportDependencies = [design           : buildDependency(supportPackage, 'design', supportVersion),
@@ -54,29 +56,30 @@ ext {
                          okhttpModule: buildDependency(glidePackage, 'okhttp3-integration', glideOkhttpModuleVersion)
     ]
 
-    rxDependencies = [java   : buildDependency(rxPackage, 'rxjava', rxVersion),
-                      android: buildDependency(rxPackage, 'rxandroid', rxVersion)
+    rxDependencies = [java      : buildDependency(rxPackage, 'rxjava', rxVersion),
+                      android   : buildDependency(rxPackage, 'rxandroid', rxVersion),
+                      Permission: buildDependency(rxPermissionPackage, 'rxpermissions', rxPermissionVersion)
     ]
 
-    rxLifeDependencies = [life   : buildDependency(rxLifePackage, 'rxlifecycle', rxLifeVersion),
+    rxLifeDependencies = [life      : buildDependency(rxLifePackage, 'rxlifecycle', rxLifeVersion),
                           components: buildDependency(rxLifePackage, 'rxlifecycle-components', rxLifeVersion)
     ]
 
-    fragmentationDependencies = [fragmentation   : buildDependency(fragmentationPackage, 'fragmentation', fragmentationVersion)]
+    fragmentationDependencies = [fragmentation: buildDependency(fragmentationPackage, 'fragmentation', fragmentationVersion)]
 
-    butterKnifeDependencies = [butterKnife   : buildDependency(butterKnifePackage, 'butterknife', butterKnifeVersion),
-                               compiler: buildDependency(butterKnifePackage, 'butterknife-compiler', butterKnifeVersion)
+    butterKnifeDependencies = [butterKnife: buildDependency(butterKnifePackage, 'butterknife', butterKnifeVersion),
+                               compiler   : buildDependency(butterKnifePackage, 'butterknife-compiler', butterKnifeVersion)
     ]
 
-    eventBusDependencies = [eventBus   : buildDependency(eventBusPackage, 'eventbus', eventBusVersion)
+    eventBusDependencies = [eventBus: buildDependency(eventBusPackage, 'eventbus', eventBusVersion)
     ]
 
-    dagger2Dependencies = [dagger2   : buildDependency(dagger2Package, 'dagger', dagger2Version),
+    dagger2Dependencies = [dagger2 : buildDependency(dagger2Package, 'dagger', dagger2Version),
                            compiler: buildDependency(dagger2Package, 'dagger-compiler', dagger2Version)
     ]
 
-    activityRouterDependencies = [activityRouter   : buildDependency(activityRouterPackage, 'activityrouter', activityRouterVersion),
-                                  compiler: buildDependency(activityRouterPackage, 'compiler', activityRouterAptVersion)
+    activityRouterDependencies = [activityRouter: buildDependency(activityRouterPackage, 'activityrouter', activityRouterVersion),
+                                  compiler      : buildDependency(activityRouterPackage, 'compiler', activityRouterAptVersion)
     ]
 
 }

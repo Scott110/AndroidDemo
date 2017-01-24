@@ -4,6 +4,7 @@ import android.databinding.DataBindingUtil;
 import android.databinding.ObservableArrayList;
 import android.os.Bundle;
 import android.support.v4.view.ViewPager;
+import android.support.v7.app.AppCompatDialogFragment;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.widget.Toast;
@@ -16,8 +17,11 @@ import com.scott.lib.dBinding.adapter.BaseItemViewSelector;
 import com.scott.lib.dBinding.adapter.ItemView;
 import com.scott.lib.manager.RlvConfigManager;
 import com.scott.lib.ui.BaseRlvFragment;
+import com.scott.lib.widget.dialog.LoadingProgressDialog;
 import com.scott.libhttp.callback.HttpOnNextCallback;
 import com.scott.libhttp.manager.HttpManager;
+
+import java.util.List;
 
 /**
  * author: heshantao
@@ -46,26 +50,34 @@ public class ThirdFragment extends BaseRlvFragment {
         binding = DataBindingUtil.setContentView(_mActivity, getLayoutId());
         binding.setFragment(this);
         recyclerView = binding.rlv;
-        //initRecyclerView();
-        vp = binding.vp;
+        initRecyclerView();
 
         //initViewPage();
+        initVaryView(recyclerView);
 
-        requestList();
+        //requestList();
     }
 
 
     void requestList() {
-        PersonApi api = new PersonApi(callback, this);
+        PersonApi api = new PersonApi(this);
         api.setId("23");
+        api.setCallback(callback);
+        api.setShowVaryLoadingView(true);
+        api.setmView(this);
+        //api.setShowProgressDialog(true);
+        LoadingProgressDialog dialogFragment = LoadingProgressDialog.newInstance();
+        //api.setProgressDialog(dialogFragment);
         HttpManager.doHttpDeal(api, _mActivity);
     }
 
 
-    HttpOnNextCallback<Person> callback = new HttpOnNextCallback<Person>() {
+    HttpOnNextCallback<List<Person>> callback = new HttpOnNextCallback<List<Person>>() {
         @Override
-        public void onNext(Person person) {
-            Toast.makeText(_mActivity, "用户名" + person.getName(), Toast.LENGTH_SHORT).show();
+        public void onNext(List list) {
+            //Toast.makeText(_mActivity, "用户名" + person.getName(), Toast.LENGTH_SHORT).show();
+            persons.addAll(list);
+
         }
 
     };
@@ -78,7 +90,7 @@ public class ThirdFragment extends BaseRlvFragment {
             person.setAge(i + "");
             person.setName("Scott：：：：：" + i);
             person.setPicUrl("http://sys.files.1dabang.cn/upload/sys/images/2016-04-28/fb5870e2-1068-4a86-b9e1-40460a740ba5.jpg");
-            persons.add(person);
+            //persons.add(person);
         }
 
         BaseItemViewSelector<Person> selector = new BaseItemViewSelector<Person>() {
@@ -100,7 +112,7 @@ public class ThirdFragment extends BaseRlvFragment {
     }
 
     public void onBtnClick(View view) {
-        ObservableArrayList<Person> addList = new ObservableArrayList();
+       /* ObservableArrayList<Person> addList = new ObservableArrayList();
         for (int i = 0; i < 3; i++) {
             Person person = new Person();
             person.setAge(i + "");
@@ -109,6 +121,8 @@ public class ThirdFragment extends BaseRlvFragment {
             persons.add(person);
         }
 
-        persons.addAll(addList);
+        persons.addAll(addList);*/
+        requestList();
+
     }
 }

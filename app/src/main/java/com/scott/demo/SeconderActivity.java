@@ -1,5 +1,6 @@
 package com.scott.demo;
 
+import android.os.Bundle;
 import android.widget.Toast;
 
 import com.github.mzule.activityrouter.annotation.Router;
@@ -25,14 +26,9 @@ public class SeconderActivity extends BaseActivity {
     }
 
     @Override
-    public void initData() {
+    public void init(Bundle savedInstanceState) {
         String age = getIntent().getStringExtra("age");
         Toast.makeText(this, "多大了" + age, Toast.LENGTH_SHORT).show();
-        
     }
 
-    @Override
-    public void initView() {
-
-    }
 }

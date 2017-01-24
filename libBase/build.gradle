@@ -48,6 +48,8 @@ dependencies {
     apt dagger2Dependencies.compiler
     //activityRouter
     compile activityRouterDependencies.activityRouter
+    //RxPersions
+    compile rxDependencies.Permission
 
     compile project(':libstyle')
     compile project(':libHttp')

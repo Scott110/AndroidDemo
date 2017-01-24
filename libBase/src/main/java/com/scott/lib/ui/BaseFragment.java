@@ -55,7 +55,7 @@ public abstract class BaseFragment extends RxFragment implements IBaseView {
 
 
     //初始化各种状态切换View
-    void initVaryView(View contenView) {
+   public void initVaryView(View contenView) {
         mController = new VaryViewHelperController
                 .Builder().setContentView(contenView)
                 .setLoadingView(new DefaultLoadingView(_mActivity))

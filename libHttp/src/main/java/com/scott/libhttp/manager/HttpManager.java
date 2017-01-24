@@ -1,6 +1,7 @@
 package com.scott.libhttp.manager;
 
 import android.content.Context;
+import android.support.v4.app.Fragment;
 
 import com.franmontiel.persistentcookiejar.PersistentCookieJar;
 import com.franmontiel.persistentcookiejar.cache.SetCookieCache;
@@ -13,6 +14,7 @@ import com.scott.libhttp.rx.RetryWhenFun;
 import com.scott.libhttp.subscriber.RxSubscriber;
 import com.scott.util.CacheUtils;
 import com.trello.rxlifecycle.LifecycleProvider;
+import com.trello.rxlifecycle.android.ActivityEvent;
 import com.trello.rxlifecycle.android.FragmentEvent;
 import com.trello.rxlifecycle.android.RxLifecycleAndroid;
 
@@ -66,7 +68,6 @@ public class HttpManager {
 
 
     public static void doHttpDeal(BaseApi basePar, Context context) {
-
         Retrofit retrofit = new Retrofit.Builder()
                 .baseUrl(basePar.getBaseUrl())
                 .addConverterFactory(GsonConverterFactory.create())
@@ -77,12 +78,13 @@ public class HttpManager {
         RxSubscriber subscriber = new RxSubscriber(basePar);
         Observable observable = basePar.getObservable(retrofit)
                 .retryWhen(new RetryWhenFun())
-                .compose(basePar.getLifeProvider().bindUntilEvent(FragmentEvent.DESTROY))
+                .compose(basePar.getLifeProvider() instanceof Fragment ?
+                        basePar.getLifeProvider().bindUntilEvent(FragmentEvent.DESTROY):
+                        basePar.getLifeProvider().bindUntilEvent(ActivityEvent.DESTROY))
                 .subscribeOn(Schedulers.io())
                 .unsubscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .map(basePar);
-
         observable.subscribe(subscriber);
     }
 }

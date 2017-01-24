@@ -1,5 +1,7 @@
 package com.scott.demo;
 
+import android.os.Bundle;
+
 import com.github.mzule.activityrouter.annotation.Router;
 import com.scott.lib.ui.BaseActivity;
 
@@ -22,15 +24,9 @@ public class ThirdActivity extends BaseActivity {
     }
 
     @Override
-    public void initData() {
+    public void init(Bundle savedInstanceState) {
 
     }
-
-    @Override
-    public void initView() {
-
-    }
-
 
     private void getPersonInfo(){
 

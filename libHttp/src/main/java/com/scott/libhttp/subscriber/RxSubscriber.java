@@ -5,20 +5,15 @@ import android.support.v4.app.FragmentManager;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.app.AppCompatDialogFragment;
 
-import com.google.gson.Gson;
 import com.scott.libhttp.IBaseView;
 import com.scott.libhttp.api.BaseApi;
-import com.scott.libhttp.ben.HttpResponseEntity;
 import com.scott.libhttp.callback.HttpOnNextCallback;
-import com.scott.libhttp.exception.ApiExecption;
 import com.scott.libhttp.manager.ExecptionManager;
 import com.scott.libhttp.manager.HttpDialogManager;
 import com.trello.rxlifecycle.LifecycleProvider;
 
 import java.lang.ref.SoftReference;
 
-import okhttp3.ResponseBody;
-import retrofit2.adapter.rxjava.HttpException;
 import rx.Subscriber;
 
 
@@ -32,7 +27,7 @@ public class RxSubscriber<T> extends Subscriber<T> {
     /*是否弹框*/
     private boolean showPorgressDialog = false;
     /*是否显示LoadingView*/
-    private boolean showVaryLoadingView = true;
+    private boolean showVaryLoadingView = false;
     /* 软引用回调接口*/
     private SoftReference<HttpOnNextCallback> mSubscriberOnNextListener;
     /*软引用反正内存泄露*/
@@ -59,7 +54,7 @@ public class RxSubscriber<T> extends Subscriber<T> {
         if (lifeProvide.get() != null) {
             FragmentManager manager = null;
             if (lifeProvide.get() instanceof Fragment) {
-                manager = ((Fragment) lifeProvide.get()).getFragmentManager();
+                manager = ((Fragment) lifeProvide.get()).getChildFragmentManager();
             } else if (lifeProvide.get() instanceof AppCompatActivity) {
                 manager = ((AppCompatActivity) lifeProvide.get()).getSupportFragmentManager();
             }
@@ -153,26 +148,6 @@ public class RxSubscriber<T> extends Subscriber<T> {
         showVaryRestorView();
     }
 
-    //将http异常转化为Api 异常
-    private Throwable transformException(Throwable e) {
-        ResponseBody body = ((HttpException) e).response().errorBody();
-        ApiExecption execption;
-        HttpResponseEntity responseResult = null;
-        try {
-            Gson gson = new Gson();
-            responseResult = gson.fromJson(body.toString(), HttpResponseEntity.class);
-        } catch (Exception eo) {
-            showErroView();
-            eo.printStackTrace();
-        }
-
-        if (responseResult != null) {
-            execption = new ApiExecption(responseResult.getCode(), responseResult.getMessage());
-            e = execption;
-            showErroView();
-        }
-        return e;
-    }
 
     @Override
     public void onStart() {
@@ -199,7 +174,9 @@ public class RxSubscriber<T> extends Subscriber<T> {
         } else if (manager.isApiException(e)) {
             showErroView();
         } else if (manager.isHttpException(e)) {
-            e = transformException(e);
+            showNetErroView();
+        } else {
+            showErroView();
         }
 
         if (mSubscriberOnNextListener.get() != null) {

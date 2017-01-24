@@ -6,10 +6,10 @@
     android:orientation="vertical">
 
     <TextView
-        android:id="@+id/empty_tv"
+        android:id="@+id/loading_tv"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="无内容"
-        android:textColor="@android:color/holo_red_dark" />
+        android:text="加载中。。。稍等"
+        android:textColor="@color/colorPrimary" />
 
 </LinearLayout>
