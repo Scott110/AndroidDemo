@@ -58,6 +58,11 @@ public class ThirdFragment extends BaseRlvFragment {
         //requestList();
     }
 
+    @Override
+    public void requestData() {
+
+    }
+
 
     void requestList() {
         PersonApi api = new PersonApi(this);

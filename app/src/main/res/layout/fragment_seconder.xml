@@ -97,6 +97,13 @@
         <android.support.v7.widget.RecyclerView
             android:id="@+id/rlv"
             android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:visibility="gone" />
+
+
+        <com.scott.lib.widget.recyclerView.XRecyclerView
+            android:id="@+id/xrlv"
+            android:layout_width="match_parent"
             android:layout_height="match_parent" />
 
     </LinearLayout>

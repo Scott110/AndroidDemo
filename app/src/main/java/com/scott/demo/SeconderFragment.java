@@ -19,14 +19,15 @@ import com.scott.demo.bean.Person;
 import com.scott.demo.bean.Student;
 import com.scott.demo.databinding.FragmentSeconderBinding;
 import com.scott.demo.databinding.ItemRedTxtBinding;
-import com.scott.lib.dBinding.EventHandler;
-import com.scott.lib.ui.BaseFragment;
-import com.scott.lib.callback.DbindingEventCallback;
+import com.scott.libstyle.EventHandler;
+import com.scott.libstyle.DbindingEventCallback;
 import com.scott.lib.dBinding.adapter.BaseItemViewSelector;
 import com.scott.lib.dBinding.adapter.BindingRecyclerViewAdapter;
 import com.scott.lib.dBinding.adapter.ItemView;
 import com.scott.lib.dBinding.adapter.ItemViewArg;
 import com.scott.lib.manager.LayoutManagers;
+import com.scott.lib.ui.BaseRlvFragment;
+import com.scott.lib.widget.recyclerView.XRecyclerView;
 
 import java.lang.reflect.Constructor;
 import java.util.ArrayList;
@@ -38,7 +39,7 @@ import java.util.List;
  * data: 2017/1/9.
  */
 
-public class SeconderFragment extends BaseFragment implements DbindingEventCallback<Person> {
+public class SeconderFragment extends BaseRlvFragment implements DbindingEventCallback<Person> {
     private static final String TAG = "SeconderFragment";
     FragmentSeconderBinding binding;
     Student student;
@@ -48,6 +49,7 @@ public class SeconderFragment extends BaseFragment implements DbindingEventCallb
     ObservableArrayList persons;
 
     RecyclerView recyclerView;
+    XRecyclerView xRecyclerView;
 
     public static SeconderFragment newInstance() {
         return new SeconderFragment();
@@ -90,17 +92,30 @@ public class SeconderFragment extends BaseFragment implements DbindingEventCallb
         binding.setItem(item);
 
         recyclerView = binding.rlv;
+        xRecyclerView = binding.xrlv;
         binding.setUrl("http://sys.files.1dabang.cn/upload/sys/images/2016-04-28/fb5870e2-1068-4a86-b9e1-40460a740ba5.jpg");
 
         initRecyclerView();
 
     }
 
+    @Override
+    public void requestData() {
+        for (int i = 0; i < 10; i++) {
+            Person person = new Person();
+            person.setAge(i + "");
+            person.setName("Scott****：：：：：" + i * 5);
+            person.setPicUrl("http://sys.files.1dabang.cn/upload/sys/images/2016-04-28/fb5870e2-1068-4a86-b9e1-40460a740ba5.jpg");
+            persons.add(person);
+        }
+        xRecyclerView.setNoMore(true);
+    }
+
 
     void initRecyclerView() {
         //LinearLayoutManager linearLayoutManager = new LinearLayoutManager(_mActivity);
         students = new ArrayList<Student>();
-        for (int i = 0; i < 10; i++) {
+        for (int i = 0; i < 20; i++) {
             Student student = new Student();
             student.setAge(i);
             student.setSname("何善涛：：：：：" + i);
@@ -113,14 +128,14 @@ public class SeconderFragment extends BaseFragment implements DbindingEventCallb
         for (int i = 0; i < 10; i++) {
             Person person = new Person();
             person.setAge(i + "");
-            person.setName("Scott：：：：：" + i);
+            person.setName("Scott1111111111：：：：：" + i);
             person.setPicUrl("http://sys.files.1dabang.cn/upload/sys/images/2016-04-28/fb5870e2-1068-4a86-b9e1-40460a740ba5.jpg");
             persons.add(person);
         }
 
         //EasyRecyclerAdapter adapter=new EasyRecyclerAdapter()
 
-        RecyclerView.LayoutManager linearLayoutManager = LayoutManagers.linear(LinearLayoutManager.HORIZONTAL, false).create(recyclerView);
+        RecyclerView.LayoutManager linearLayoutManager = LayoutManagers.linear(LinearLayoutManager.VERTICAL, false).create(recyclerView);
 
         ItemView itemView = ItemView.of(BR.subStu, R.layout.item_text);
 
@@ -140,7 +155,8 @@ public class SeconderFragment extends BaseFragment implements DbindingEventCallb
         //BindingRecyclerViewAdapter<Person> adapter = BindingRecyclerViewAdapterFactory.DEFAULT.create(recyclerView, arg);
 
         MyAdapter<Person> adapter = new MyAdapter<Person>(arg);
-        adapter.onAttachedToRecyclerView(recyclerView);
+        //adapter.onAttachedToRecyclerView(recyclerView);
+        adapter.onAttachedToRecyclerView(xRecyclerView);
 
         adapter.setItems(persons);
       /*  adapter.setViewHolderFactory(new BindingRecyclerViewAdapter.ViewHolderFactory() {
@@ -151,10 +167,13 @@ public class SeconderFragment extends BaseFragment implements DbindingEventCallb
         });*/
 
 
-        recyclerView.setLayoutManager(linearLayoutManager);
-        recyclerView.setAdapter(adapter);
+        //recyclerView.setLayoutManager(linearLayoutManager);
+        //recyclerView.setAdapter(adapter);
 
-
+        xRecyclerView.setLayoutManager(linearLayoutManager);
+        xRecyclerView.setAdapter(adapter);
+        setRecyclerView(xRecyclerView);
+        setLoadingMore();
     }
 
     @Override

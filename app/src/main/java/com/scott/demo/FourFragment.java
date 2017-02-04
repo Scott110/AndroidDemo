@@ -4,6 +4,7 @@ import android.databinding.DataBindingUtil;
 import android.os.Bundle;
 
 import com.scott.lib.ui.BaseFragment;
+import com.scott.libstyle.loadMore;
 
 /**
  * author: heshantao

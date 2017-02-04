@@ -9,7 +9,7 @@
 
         <import type="com.scott.demo.bean.Person" />
 
-        <import type="com.scott.lib.dBinding.EventHandler" />
+        <import type="com.scott.libstyle.EventHandler" />
 
         <variable
             name="subStu"

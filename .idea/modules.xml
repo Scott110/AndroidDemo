@@ -2,9 +2,12 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
-      <module fileurl="file://$PROJECT_DIR$/AndroidDemo.iml" filepath="$PROJECT_DIR$/AndroidDemo.iml" />
+      <module fileurl="file://$PROJECT_DIR$/AndroidSimpleDemo.iml" filepath="$PROJECT_DIR$/AndroidSimpleDemo.iml" />
       <module fileurl="file://$PROJECT_DIR$/app/app.iml" filepath="$PROJECT_DIR$/app/app.iml" />
-      <module fileurl="file://$PROJECT_DIR$/commonlib/commonlib.iml" filepath="$PROJECT_DIR$/commonlib/commonlib.iml" />
+      <module fileurl="file://$PROJECT_DIR$/libBase/libBase.iml" filepath="$PROJECT_DIR$/libBase/libBase.iml" />
+      <module fileurl="file://$PROJECT_DIR$/libHttp/libHttp.iml" filepath="$PROJECT_DIR$/libHttp/libHttp.iml" />
+      <module fileurl="file://$PROJECT_DIR$/libUtil/libUtil.iml" filepath="$PROJECT_DIR$/libUtil/libUtil.iml" />
+      <module fileurl="file://$PROJECT_DIR$/libstyle/libstyle.iml" filepath="$PROJECT_DIR$/libstyle/libstyle.iml" />
     </modules>
   </component>
 </project>

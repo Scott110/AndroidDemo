@@ -1,9 +1,7 @@
-package com.scott.lib.dBinding;
+package com.scott.libstyle;
 
 import android.content.Context;
 import android.view.View;
-
-import com.scott.lib.callback.DbindingEventCallback;
 
 /**
  * author: heshantao
@@ -20,6 +18,11 @@ public class EventHandler<T> {
 
     public EventHandler(Context context) {
         this.context = context;
+    }
+
+    public EventHandler(Context context,DbindingEventCallback<T> callback) {
+        this.context = context;
+        mCallback=callback;
     }
 
     public void setEventCallback(DbindingEventCallback<T> callback) {
