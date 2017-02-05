@@ -26,5 +26,6 @@ public class FourFragment extends BaseFragment {
     public void init(Bundle savedInstanceState) {
         vp binding = DataBindingUtil.setContentView(_mActivity, getLayoutId());
         binding.setTitle("第四个界面");
+        
     }
 }

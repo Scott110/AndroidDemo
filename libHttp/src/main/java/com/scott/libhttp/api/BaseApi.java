@@ -39,11 +39,12 @@ public abstract class BaseApi<T> implements Func1<HttpResponseEntity<T>, T> {
     private boolean showVaryLoadingView;
     /*各种状态View 切换的View接口*/
     private IBaseView mView;
-    /*基础url*/
-    private String baseUrl = Constants.Http.BASE_URL;
 
-    public BaseApi(LifecycleProvider lifecycleProvider) {
+    private Retrofit retrofit;
+
+    public BaseApi(LifecycleProvider lifecycleProvider, Retrofit retrofit) {
         setLifeProvider(lifecycleProvider);
+        setRetrofit(retrofit);
         setShowVaryLoadingView(false);
         setShowProgressDialog(false);
     }
@@ -70,14 +71,6 @@ public abstract class BaseApi<T> implements Func1<HttpResponseEntity<T>, T> {
 
     public void setShowVaryLoadingView(boolean showVaryLoadingView) {
         this.showVaryLoadingView = showVaryLoadingView;
-    }
-
-    public String getBaseUrl() {
-        return baseUrl;
-    }
-
-    public void setBaseUrl(String baseUrl) {
-        this.baseUrl = baseUrl;
     }
 
 
@@ -119,13 +112,16 @@ public abstract class BaseApi<T> implements Func1<HttpResponseEntity<T>, T> {
     }
 
 
-    /**
-     * 设置参数
-     *
-     * @param retrofit
-     * @return
-     */
-    public abstract Observable getObservable(Retrofit retrofit);
+    public Retrofit getRetrofit() {
+        return retrofit;
+    }
+
+    public void setRetrofit(Retrofit retrofit) {
+        this.retrofit = retrofit;
+    }
+
+
+    public abstract Observable getObservable();
 
     @Override
     public T call(HttpResponseEntity<T> tHttpResponseEntity) {

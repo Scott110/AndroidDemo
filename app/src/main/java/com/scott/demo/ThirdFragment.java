@@ -65,15 +65,15 @@ public class ThirdFragment extends BaseRlvFragment {
 
 
     void requestList() {
-        PersonApi api = new PersonApi(this);
-        api.setId("23");
-        api.setCallback(callback);
-        api.setShowVaryLoadingView(true);
-        api.setmView(this);
+        //PersonApi api = new PersonApi(this);
+        //api.setId("23");
+        //api.setCallback(callback);
+        //api.setShowVaryLoadingView(true);
+        //api.setmView(this);
         //api.setShowProgressDialog(true);
         LoadingProgressDialog dialogFragment = LoadingProgressDialog.newInstance();
         //api.setProgressDialog(dialogFragment);
-        HttpManager.doHttpDeal(api, _mActivity);
+        //HttpManager.doHttpDeal(api, _mActivity);
     }
 
 
@@ -110,10 +110,10 @@ public class ThirdFragment extends BaseRlvFragment {
         };
 
         String adapterName = "com.scott.demo.adapter.CustomerAdapter";
-        RecyclerViewConfiguration configManager = RlvConfigManager.getInstance()
+        /*RecyclerViewConfiguration configManager = RlvConfigManager.getInstance()
                 .mutileRecyclerConfig(recyclerView, selector, persons, adapterName);
         configRecyclerView(configManager);
-
+*/
     }
 
     public void onBtnClick(View view) {

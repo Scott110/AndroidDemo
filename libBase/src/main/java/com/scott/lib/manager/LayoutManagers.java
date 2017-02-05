@@ -10,12 +10,12 @@ import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;
 
 /**
- * A collection of factories to create RecyclerView LayoutManagers so that you can easily set them
- * in your layout.
+ * author: heshantao
+ * data: 2017/1/22.
+ * LayoutManager 管理器
  */
 public class LayoutManagers {
-    protected LayoutManagers() {
-    }
+
 
     public interface LayoutManagerFactory {
         RecyclerView.LayoutManager create(RecyclerView recyclerView);
@@ -24,7 +24,7 @@ public class LayoutManagers {
     /**
      * A {@link LinearLayoutManager}.
      */
-    public static LayoutManagerFactory linear() {
+    public  LayoutManagerFactory linear() {
         return new LayoutManagerFactory() {
             @Override
             public RecyclerView.LayoutManager create(RecyclerView recyclerView) {
@@ -36,7 +36,7 @@ public class LayoutManagers {
     /**
      * A {@link LinearLayoutManager} with the given orientation and reverseLayout.
      */
-    public static LayoutManagerFactory linear(@Orientation final int orientation, final boolean reverseLayout) {
+    public  LayoutManagerFactory linear(@Orientation final int orientation, final boolean reverseLayout) {
         return new LayoutManagerFactory() {
             @Override
             public RecyclerView.LayoutManager create(RecyclerView recyclerView) {
@@ -48,7 +48,7 @@ public class LayoutManagers {
     /**
      * A {@link GridLayoutManager} with the given spanCount.
      */
-    public static LayoutManagerFactory grid(final int spanCount) {
+    public  LayoutManagerFactory grid(final int spanCount) {
         return new LayoutManagerFactory() {
             @Override
             public RecyclerView.LayoutManager create(RecyclerView recyclerView) {
@@ -61,7 +61,7 @@ public class LayoutManagers {
      * A {@link GridLayoutManager} with the given spanCount, orientation and reverseLayout.
      * reverseLayout 是否逆向排列
      **/
-    public static LayoutManagerFactory grid(final int spanCount, @Orientation final int orientation, final boolean reverseLayout) {
+    public  LayoutManagerFactory grid(final int spanCount, @Orientation final int orientation, final boolean reverseLayout) {
         return new LayoutManagerFactory() {
             @Override
             public RecyclerView.LayoutManager create(RecyclerView recyclerView) {
@@ -73,7 +73,7 @@ public class LayoutManagers {
     /**
      * A {@link StaggeredGridLayoutManager} with the given spanCount and orientation.
      */
-    public static LayoutManagerFactory staggeredGrid(final int spanCount, @Orientation final int orientation) {
+    public  LayoutManagerFactory staggeredGrid(final int spanCount, @Orientation final int orientation) {
         return new LayoutManagerFactory() {
             @Override
             public RecyclerView.LayoutManager create(RecyclerView recyclerView) {

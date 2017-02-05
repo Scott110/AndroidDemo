@@ -40,4 +40,10 @@ public class TestFragment extends BaseFragment {
     void onThirdClick() {
         Routers.open(getActivity(), "scott://third");
     }
+
+
+    @OnClick(R.id.di_btn)
+    void onDClick() {
+        Routers.open(getActivity(), "scott://di");
+    }
 }

@@ -12,6 +12,14 @@
         android:text="@string/base_txt" />
 
 
+
+
+    <Button
+        android:id="@+id/di_btn"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="dagger2测试页面" />
+
     <Button
         android:id="@+id/skip_btn"
         android:layout_width="wrap_content"

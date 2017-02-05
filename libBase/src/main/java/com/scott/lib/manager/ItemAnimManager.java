@@ -12,25 +12,6 @@ import com.scott.lib.anim.itemAnim.LandingAnimator;
 
 public class ItemAnimManager {
     private static final String TAG = ItemAnimManager.class.getSimpleName();
-    private volatile static ItemAnimManager INSTANCE;
-
-    //构造方法私有
-    private ItemAnimManager() {
-    }
-
-    //获取单例
-    public static ItemAnimManager getInstance() {
-        if (INSTANCE == null) {
-            synchronized (ItemAnimManager.class) {
-                if (INSTANCE == null) {
-                    INSTANCE = new ItemAnimManager();
-                }
-            }
-        }
-        return INSTANCE;
-    }
-
-
     public RecyclerView.ItemAnimator DEFAULT() {
         LandingAnimator animator = new LandingAnimator();
         return animator;

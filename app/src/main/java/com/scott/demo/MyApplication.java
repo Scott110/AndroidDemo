@@ -1,7 +1,12 @@
 package com.scott.demo;
 
 import android.app.Application;
+import android.content.Context;
 
+import com.scott.demo.di.component.ApplicationComponent;
+import com.scott.demo.di.component.DaggerApplicationComponent;
+import com.scott.demo.di.component.DaggerRepositoryComponent;
+import com.scott.demo.di.module.ApplicationModule;
 import com.scott.lib.db.DbHelper;
 
 import io.realm.Realm;
@@ -13,6 +18,7 @@ import io.realm.RealmConfiguration;
 
 public class MyApplication extends Application {
     private static final String TAG = "MyApplication";
+    ApplicationComponent appComponent;
 
     @Override
     public void onCreate() {
@@ -21,7 +27,19 @@ public class MyApplication extends Application {
         //repositoryComponent=DaggerRepositoryComponent.builder().repositoryModule(new RepositoryModule("http")).applicationModule(new ApplicationModule(this)).build();
         //DaggerApplicationComponent.builder().applicationModule(new ApplicationModule(MyApplication.this)).build();
 
+        getApplicationComponent().inject(this);
+    }
 
+    public ApplicationComponent getApplicationComponent() {
+        if (appComponent == null) {
+            appComponent = DaggerApplicationComponent.builder().applicationModule(new ApplicationModule(this)).build();
+        }
+        return appComponent;
+    }
+
+
+    public static MyApplication getApplication(Context context) {
+        return (MyApplication) context.getApplicationContext();
     }
 
 

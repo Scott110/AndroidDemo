@@ -1,10 +1,13 @@
 package com.scott.demo.api;
 
+import android.util.Log;
+
 import com.scott.demo.PersonService;
 import com.scott.demo.bean.Person;
 import com.scott.libhttp.api.BaseApi;
-import com.scott.libhttp.callback.HttpOnNextCallback;
 import com.trello.rxlifecycle.LifecycleProvider;
+
+import javax.inject.Inject;
 
 import retrofit2.Retrofit;
 import rx.Observable;
@@ -17,8 +20,9 @@ import rx.Observable;
 public class PersonApi extends BaseApi<Person> {
     String id;
 
-    public PersonApi(LifecycleProvider lifecycleProvider) {
-        super(lifecycleProvider);
+    @Inject
+    public PersonApi(LifecycleProvider lifecycleProvider, Retrofit retrofit) {
+        super(lifecycleProvider, retrofit);
     }
 
 
@@ -27,8 +31,8 @@ public class PersonApi extends BaseApi<Person> {
     }
 
     @Override
-    public Observable getObservable(Retrofit retrofit) {
-        PersonService service = retrofit.create(PersonService.class);
+    public Observable getObservable() {
+        PersonService service = getRetrofit().create(PersonService.class);
         return service.getPerson(id);
     }
 }

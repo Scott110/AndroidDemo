@@ -135,7 +135,7 @@ public class SeconderFragment extends BaseRlvFragment implements DbindingEventCa
 
         //EasyRecyclerAdapter adapter=new EasyRecyclerAdapter()
 
-        RecyclerView.LayoutManager linearLayoutManager = LayoutManagers.linear(LinearLayoutManager.VERTICAL, false).create(recyclerView);
+        //RecyclerView.LayoutManager linearLayoutManager = LayoutManagers.linear(LinearLayoutManager.VERTICAL, false).create(recyclerView);
 
         ItemView itemView = ItemView.of(BR.subStu, R.layout.item_text);
 
@@ -170,7 +170,7 @@ public class SeconderFragment extends BaseRlvFragment implements DbindingEventCa
         //recyclerView.setLayoutManager(linearLayoutManager);
         //recyclerView.setAdapter(adapter);
 
-        xRecyclerView.setLayoutManager(linearLayoutManager);
+        //xRecyclerView.setLayoutManager(linearLayoutManager);
         xRecyclerView.setAdapter(adapter);
         setRecyclerView(xRecyclerView);
         setLoadingMore();

@@ -2,6 +2,7 @@ package com.scott.libhttp.manager;
 
 import android.content.Context;
 import android.support.v4.app.Fragment;
+import android.util.Log;
 
 import com.franmontiel.persistentcookiejar.PersistentCookieJar;
 import com.franmontiel.persistentcookiejar.cache.SetCookieCache;
@@ -34,15 +35,15 @@ import rx.schedulers.Schedulers;
  */
 
 public class HttpManager {
+    private static final String TAG = HttpManager.class.getSimpleName();
 
-    public static OkHttpClient getClient(Context context) {
+    public OkHttpClient getOkhttpClient(Context context) {
         HttpLoggingInterceptor loggingInterceptor = new HttpLoggingInterceptor();
         if (Constants.DEBUG) {
             loggingInterceptor.setLevel(HttpLoggingInterceptor.Level.BODY);
         } else {
             loggingInterceptor.setLevel(HttpLoggingInterceptor.Level.BASIC);
         }
-
         long maxCacheSize = 1000 * 1000 * 50;
         Cache cache = new Cache(CacheUtils.getOkHttpFile(context), maxCacheSize);
 
@@ -56,9 +57,9 @@ public class HttpManager {
         return builder.build();
     }
 
-    public static Retrofit getInstance(OkHttpClient client, String baseUrl) {
+    public Retrofit getRetrofit(OkHttpClient client) {
         Retrofit retrofit = new Retrofit.Builder()
-                .baseUrl(baseUrl)
+                .baseUrl(Constants.Http.BASE_URL)
                 .addConverterFactory(GsonConverterFactory.create())
                 .addCallAdapterFactory(RxJavaCallAdapterFactory.create())
                 .client(client)
@@ -67,19 +68,12 @@ public class HttpManager {
     }
 
 
-    public static void doHttpDeal(BaseApi basePar, Context context) {
-        Retrofit retrofit = new Retrofit.Builder()
-                .baseUrl(basePar.getBaseUrl())
-                .addConverterFactory(GsonConverterFactory.create())
-                .addCallAdapterFactory(RxJavaCallAdapterFactory.create())
-                .client(getClient(context))
-                .build();
-
+    public void doHttpDeal(BaseApi basePar) {
         RxSubscriber subscriber = new RxSubscriber(basePar);
-        Observable observable = basePar.getObservable(retrofit)
+        Observable observable = basePar.getObservable()
                 .retryWhen(new RetryWhenFun())
                 .compose(basePar.getLifeProvider() instanceof Fragment ?
-                        basePar.getLifeProvider().bindUntilEvent(FragmentEvent.DESTROY):
+                        basePar.getLifeProvider().bindUntilEvent(FragmentEvent.DESTROY) :
                         basePar.getLifeProvider().bindUntilEvent(ActivityEvent.DESTROY))
                 .subscribeOn(Schedulers.io())
                 .unsubscribeOn(Schedulers.io())

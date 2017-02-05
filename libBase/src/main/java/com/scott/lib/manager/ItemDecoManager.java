@@ -4,7 +4,6 @@ import android.content.Context;
 import android.support.v7.widget.RecyclerView;
 
 import com.scott.lib.widget.itemDecoration.HorizontalDividerItemDecoration;
-import com.scott.lib.widget.itemDecoration.VerticalDividerItemDecoration;
 import com.scott.libstyle.R;
 
 /**
@@ -15,23 +14,6 @@ import com.scott.libstyle.R;
 
 public class ItemDecoManager {
     private static final String TAG = ItemDecoManager.class.getSimpleName();
-    private volatile static ItemDecoManager INSTANCE;
-
-    //构造方法私有
-    private ItemDecoManager() {
-    }
-
-    //获取单例
-    public static ItemDecoManager getInstance() {
-        if (INSTANCE == null) {
-            synchronized (ItemDecoManager.class) {
-                if (INSTANCE == null) {
-                    INSTANCE = new ItemDecoManager();
-                }
-            }
-        }
-        return INSTANCE;
-    }
 
     public RecyclerView.ItemDecoration DEFAULT(Context mCxt) {
         HorizontalDividerItemDecoration dec = new HorizontalDividerItemDecoration.Builder(mCxt)
