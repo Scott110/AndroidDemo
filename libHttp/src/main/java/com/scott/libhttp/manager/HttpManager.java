@@ -81,4 +81,18 @@ public class HttpManager {
                 .map(basePar);
         observable.subscribe(subscriber);
     }
+
+
+    public Observable httpDeal(BaseApi basePar) {
+        Observable observable = basePar.getObservable()
+                .retryWhen(new RetryWhenFun())
+                .compose(basePar.getLifeProvider() instanceof Fragment ?
+                        basePar.getLifeProvider().bindUntilEvent(FragmentEvent.DESTROY) :
+                        basePar.getLifeProvider().bindUntilEvent(ActivityEvent.DESTROY))
+                .subscribeOn(Schedulers.io())
+                .unsubscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .map(basePar);
+        return observable;
+    }
 }

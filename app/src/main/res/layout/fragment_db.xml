@@ -1,0 +1,119 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <data class=".dbtest">
+
+        <import type="com.scott.libstyle.EventHandler" />
+
+        <import type="com.scott.demo.simple.db.BookBean" />
+
+        <variable
+            name="eventHandler"
+            type="EventHandler" />
+
+
+        <variable
+            name="book"
+            type="BookBean" />
+
+    </data>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:gravity="center_horizontal"
+        android:orientation="vertical">
+
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="欢迎进入Realm 持久化页面" />
+
+
+        <Button
+            android:id="@+id/add_btn"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:onClick="@{eventHandler::onClick}"
+            android:text="增" />
+
+        <Button
+            android:id="@+id/delect_btn"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:onClick="@{eventHandler::onClick}"
+            android:text="删" />
+
+        <Button
+            android:id="@+id/find_btn"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:onClick="@{eventHandler::onClick}"
+            android:text="查" />
+
+        <Button
+            android:id="@+id/paginate_find_btn"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:onClick="@{eventHandler::onClick}"
+            android:text="分页查" />
+
+        <Button
+            android:id="@+id/update_btn"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:onClick="@{eventHandler::onClick}"
+            android:text="改" />
+
+
+        <Button
+            android:id="@+id/checkout_btn"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:onClick="@{eventHandler::onClick}"
+            android:text="导出Realm文件" />
+
+
+        <TextView
+            android:id="@+id/book_name_txt"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@{book.bookName}" />
+
+
+        <Button
+            android:id="@+id/insert_book_btn"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:onClick="@{eventHandler::onClick}"
+            android:text="插入一条book数据" />
+
+
+        <Button
+            android:id="@+id/find_book_btn"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:onClick="@{eventHandler::onClick}"
+            android:text="查询book数据" />
+
+
+        <Button
+            android:id="@+id/change_book_btn"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:onClick="@{eventHandler::onClick}"
+            android:text="动态改变book数据" />
+
+
+        <Button
+            android:id="@+id/request_book_btn"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:onClick="@{eventHandler::onClick}"
+            android:text="请求网络数据" />
+
+
+    </LinearLayout>
+
+</layout>

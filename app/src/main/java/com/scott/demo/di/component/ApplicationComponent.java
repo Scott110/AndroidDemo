@@ -6,6 +6,8 @@ import android.content.Context;
 
 import com.scott.demo.di.module.ApplicationModule;
 import com.scott.demo.di.qualifier.ApplicationContext;
+import com.scott.lib.db.DbHelper;
+import com.scott.lib.db.Repository;
 import com.scott.lib.manager.RlvConfigManager;
 import com.scott.libhttp.manager.HttpManager;
 
@@ -34,6 +36,8 @@ public interface ApplicationComponent {
     Retrofit retrofit();
 
     RlvConfigManager rlvConfigManager();
+
+    Repository responsitory();
 
 }
 

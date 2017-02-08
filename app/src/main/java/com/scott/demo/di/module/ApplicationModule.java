@@ -5,6 +5,8 @@ import android.app.Application;
 import android.content.Context;
 
 import com.scott.demo.di.qualifier.ApplicationContext;
+import com.scott.lib.db.DbHelper;
+import com.scott.lib.db.Repository;
 import com.scott.lib.manager.ItemAnimManager;
 import com.scott.lib.manager.ItemDecoManager;
 import com.scott.lib.manager.LayoutManagers;
@@ -77,6 +79,20 @@ public final class ApplicationModule {
     @Singleton
     RlvConfigManager provideRlvConfigManagers(ItemAnimManager animManager, ItemDecoManager decoManager, LayoutManagers layoutManagers) {
         return new RlvConfigManager(decoManager, animManager, layoutManagers);
+    }
+
+
+    @Provides
+    @Singleton
+    DbHelper provideDbHelper() {
+        return new DbHelper();
+    }
+
+
+    @Provides
+    @Singleton
+    Repository provideResponsity(DbHelper dbHelper, HttpManager httpManager) {
+        return new Repository(dbHelper, httpManager);
     }
 
 

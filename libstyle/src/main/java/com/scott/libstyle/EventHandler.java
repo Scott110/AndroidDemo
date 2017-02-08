@@ -20,9 +20,9 @@ public class EventHandler<T> {
         this.context = context;
     }
 
-    public EventHandler(Context context,DbindingEventCallback<T> callback) {
+    public EventHandler(Context context, DbindingEventCallback<T> callback) {
         this.context = context;
-        mCallback=callback;
+        mCallback = callback;
     }
 
     public void setEventCallback(DbindingEventCallback<T> callback) {
@@ -31,19 +31,19 @@ public class EventHandler<T> {
 
 
     public void onClick(View view) {
-        mCallback.onViewClick();
+        mCallback.onViewClick(view);
     }
 
     //必须是public 否则出错
     public void onClick(View view, T t) {
-        mCallback.onViewClick(t);
+        mCallback.onViewClick(view, t);
     }
 
-    public void onLongClick() {
-        mCallback.onViewLongClick();
+    public void onLongClick(View view) {
+        mCallback.onViewLongClick(view);
     }
 
     public void onLongClick(View view, T t) {
-        mCallback.onViewLongClick(t);
+        mCallback.onViewLongClick(view, t);
     }
 }

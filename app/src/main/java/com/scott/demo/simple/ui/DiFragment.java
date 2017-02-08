@@ -8,21 +8,17 @@ import android.support.v7.widget.RecyclerView;
 import android.widget.Toast;
 
 import com.scott.demo.BR;
-import com.scott.demo.MyApplication;
 import com.scott.demo.R;
 import com.scott.demo.api.PersonApi;
 import com.scott.demo.bean.Person;
 import com.scott.demo.di.InjectHelper;
-import com.scott.demo.di.component.DaggerFragmentComponent;
 import com.scott.demo.di.component.FragmentComponent;
-import com.scott.demo.di.module.FragmentModule;
 import com.scott.demo.di.qualifier.ApplicationContext;
 import com.scott.demo.dill;
 import com.scott.lib.config.RecyclerViewConfiguration;
 import com.scott.lib.dBinding.adapter.BaseItemViewSelector;
 import com.scott.lib.dBinding.adapter.ItemView;
 import com.scott.lib.manager.RlvConfigManager;
-import com.scott.lib.ui.BaseFragment;
 import com.scott.lib.ui.BaseRlvFragment;
 
 import javax.inject.Inject;
@@ -36,7 +32,6 @@ import butterknife.OnClick;
  */
 
 public class DiFragment extends BaseRlvFragment implements DiVMContract.View<Person> {
-    FragmentComponent fragmentComponent;
     @Inject
     @ApplicationContext
     Context context;

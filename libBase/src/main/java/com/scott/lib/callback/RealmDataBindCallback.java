@@ -11,11 +11,11 @@ import io.realm.RealmChangeListener;
 public interface RealmDataBindCallback {
     void notifyChange();
 
-    void notifyPropertyChanged(int fieldId);
-
     interface Factory {
         RealmChangeListener create();
+
     }
+
 
     //用于数据更新
     RealmDataBindCallback.Factory FACTORY = new Factory() {

@@ -177,22 +177,22 @@ public class SeconderFragment extends BaseRlvFragment implements DbindingEventCa
     }
 
     @Override
-    public void onViewClick(Person person) {
+    public void onViewClick(View view, Person person) {
         Toast.makeText(_mActivity, "在Fragment中处理有参数点击", Toast.LENGTH_SHORT).show();
     }
 
     @Override
-    public void onViewClick() {
+    public void onViewClick(View view) {
 
     }
 
     @Override
-    public void onViewLongClick(Person person) {
+    public void onViewLongClick(View view, Person person) {
 
     }
 
     @Override
-    public void onViewLongClick() {
+    public void onViewLongClick(View view) {
 
     }
 

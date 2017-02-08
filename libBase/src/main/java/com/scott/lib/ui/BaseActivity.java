@@ -1,25 +1,16 @@
 package com.scott.lib.ui;
 
-import android.Manifest;
-import android.content.Intent;
-import android.net.Uri;
 import android.os.Bundle;
-import android.provider.Settings;
 import android.support.annotation.Nullable;
 
 import com.scott.lib.R;
-import com.scott.lib.data.event.AppExitEvent;
-import com.tbruyelle.rxpermissions.Permission;
-import com.tbruyelle.rxpermissions.RxPermissions;
+import com.scott.lib.modle.event.AppExitEvent;
 
 import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
 import org.greenrobot.eventbus.ThreadMode;
 
-import me.yokeyword.fragmentation.SupportActivity;
 import me.yokeyword.fragmentation.SupportFragment;
-import rx.Subscriber;
-import rx.functions.Action1;
 
 /**
  * Created by scott_he on 16/10/17.RxFragment.java

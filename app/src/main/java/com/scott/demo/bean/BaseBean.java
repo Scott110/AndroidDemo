@@ -44,7 +44,6 @@ public class BaseBean extends RealmObject implements Observable, RealmDataBindCa
 
     }
 
-    @Override
     public void notifyPropertyChanged(int fieldId) {
         if (mCallbacks != null) {
             mCallbacks.notifyCallbacks(this, fieldId, null);

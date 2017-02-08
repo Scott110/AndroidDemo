@@ -1,5 +1,7 @@
 package com.scott.lib.db;
 
+import android.util.Log;
+
 import io.realm.DynamicRealm;
 import io.realm.RealmMigration;
 
@@ -10,8 +12,10 @@ import io.realm.RealmMigration;
  */
 
 public class CustomerMigration implements RealmMigration {
+    private static final String TAG = CustomerMigration.class.getSimpleName();
+
     @Override
     public void migrate(DynamicRealm realm, long oldVersion, long newVersion) {
-
+        Log.d(TAG, "migrate: " + oldVersion + "____新版本号____" + newVersion);
     }
 }

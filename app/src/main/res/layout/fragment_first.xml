@@ -9,16 +9,22 @@
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="@string/base_txt" />
+        android:text="欢迎进入测试页面"
+        android:textSize="18dp" />
 
 
+    <Button
+        android:id="@+id/db_btn"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="进入持久化页面" />
 
 
     <Button
         android:id="@+id/di_btn"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="dagger2测试页面" />
+        android:text="dagger2页面" />
 
     <Button
         android:id="@+id/skip_btn"

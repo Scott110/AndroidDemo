@@ -5,13 +5,12 @@ import android.databinding.DataBindingUtil;
 import android.support.v7.widget.RecyclerView;
 import android.util.AttributeSet;
 import android.view.LayoutInflater;
-import android.view.View;
 import android.view.ViewGroup;
 import android.widget.FrameLayout;
 import android.widget.TextView;
 
 import com.scott.libstyle.EventHandler;
-import com.scott.libstyle.loadMore;
+import com.scott.libstyle.loadMoreFoot;
 
 
 /**
@@ -31,7 +30,7 @@ public class LoadingMoreFooter extends FrameLayout {
     private String loadingErroHint;
     Context mCxt;
     TextView hintTxt;
-    loadMore bind;
+    loadMoreFoot bind;
 
 
     public LoadingMoreFooter(Context context) {

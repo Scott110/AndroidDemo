@@ -31,8 +31,6 @@ public class TestFragment extends BaseFragment {
     @OnClick(R.id.skip_btn)
     void onClick() {
         Routers.open(getActivity(), "scott://seconder/12");
-        //Intent intent = new Intent(getActivity(), SeconderActivity.class);
-        //startActivity(intent);
     }
 
 
@@ -45,5 +43,11 @@ public class TestFragment extends BaseFragment {
     @OnClick(R.id.di_btn)
     void onDClick() {
         Routers.open(getActivity(), "scott://di");
+    }
+
+
+    @OnClick(R.id.db_btn)
+    void onDbClick() {
+        Routers.open(getActivity(), "scott://db");
     }
 }

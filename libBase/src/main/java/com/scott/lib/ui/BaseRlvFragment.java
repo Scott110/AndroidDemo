@@ -114,23 +114,24 @@ public abstract class BaseRlvFragment<T> extends BaseFragment implements Loading
             if (footView instanceof LoadingMoreFooter) {
                 ((LoadingMoreFooter) footView)
                         .setEventHandler(new EventHandler(_mActivity, new DbindingEventCallback<T>() {
+
                             @Override
-                            public void onViewClick(T t) {
+                            public void onViewClick(View view, T t) {
 
                             }
 
                             @Override
-                            public void onViewClick() {
+                            public void onViewClick(View view) {
                                 retry();
                             }
 
                             @Override
-                            public void onViewLongClick(T t) {
+                            public void onViewLongClick(View view, T t) {
 
                             }
 
                             @Override
-                            public void onViewLongClick() {
+                            public void onViewLongClick(View view) {
 
                             }
                         }));

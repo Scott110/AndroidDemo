@@ -1,5 +1,6 @@
-package com.scott.demo.bean;
+package com.scott.demo.simple.db;
 
+import android.databinding.BaseObservable;
 import android.databinding.Bindable;
 import android.databinding.Observable;
 import android.databinding.PropertyChangeRegistry;
@@ -9,26 +10,41 @@ import com.scott.lib.callback.RealmDataBindCallback;
 
 import io.realm.RealmObject;
 import io.realm.annotations.Ignore;
+import io.realm.annotations.PrimaryKey;
 
 /**
  * author: heshantao
- * data: 2017/1/20.
- * <p>
- * 自定义Observable 和 BaseObservable 功能一样
+ * data: 2017/2/7.
  */
 
-public class Item extends RealmObject implements Observable, RealmDataBindCallback {
-    String qq;
+public class BookBean extends RealmObject implements Observable {
+
+    @PrimaryKey
+    private long _id;
+    private String bookName;
 
     @Bindable
-    public String getQq() {
-        return qq;
+    public String getBookName() {
+        return bookName;
     }
 
-    public void setQq(String qq) {
-        this.qq = qq;
+    public void setBookName(String bookName) {
+        this.bookName = bookName;
         if (!isManaged()) {
-            notifyPropertyChanged(BR.qq);
+        notifyPropertyChanged(BR.bookName);
+        }
+
+    }
+
+    @Bindable
+    public long get_id() {
+        return _id;
+    }
+
+    public void set_id(long _id) {
+        this._id = _id;
+        if (!isManaged()) {
+            notifyPropertyChanged(BR._id);
         }
     }
 
@@ -51,7 +67,6 @@ public class Item extends RealmObject implements Observable, RealmDataBindCallba
         mCallbacks.remove(onPropertyChangedCallback);
     }
 
-    @Override
     public synchronized void notifyChange() {
         if (mCallbacks != null) {
             mCallbacks.notifyCallbacks(this, 0, null);
@@ -64,6 +79,4 @@ public class Item extends RealmObject implements Observable, RealmDataBindCallba
             mCallbacks.notifyCallbacks(this, fieldId, null);
         }
     }
-
-
 }

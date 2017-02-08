@@ -2,6 +2,7 @@ package com.scott.demo.di.component;
 
 import com.scott.demo.di.module.FragmentModule;
 import com.scott.demo.di.scope.FragmentScope;
+import com.scott.demo.simple.db.DbFragment;
 import com.scott.demo.simple.ui.DiFragment;
 import com.scott.lib.base.mvvm.IBaseView;
 import com.trello.rxlifecycle.LifecycleProvider;
@@ -16,4 +17,6 @@ import dagger.Component;
 @Component(dependencies = ApplicationComponent.class, modules = FragmentModule.class)
 public interface FragmentComponent {
     void inject(DiFragment fragment);
+
+    void inject(DbFragment fragment);
 }

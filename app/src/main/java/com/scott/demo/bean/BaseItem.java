@@ -18,7 +18,6 @@ public class BaseItem implements RealmDataBindCallback {
 
     }
 
-    @Override
     public void notifyPropertyChanged(int fieldId) {
 
     }

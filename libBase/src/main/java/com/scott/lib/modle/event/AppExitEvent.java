@@ -1,4 +1,4 @@
-package com.scott.lib.data.event;
+package com.scott.lib.modle.event;
 
 /**
  * author: heshantao

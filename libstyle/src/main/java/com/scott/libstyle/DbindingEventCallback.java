@@ -1,5 +1,7 @@
 package com.scott.libstyle;
 
+import android.view.View;
+
 /**
  * author: heshantao
  * data: 2017/1/21.
@@ -9,14 +11,14 @@ package com.scott.libstyle;
 public interface DbindingEventCallback<T> {
 
     //带参数的点击
-    public void onViewClick(T t);
+    public void onViewClick(View view, T t);
 
-    public void onViewClick();
+    public void onViewClick(View view);
 
 
     //带参数的长点击
-    public void onViewLongClick(T t);
+    public void onViewLongClick(View view, T t);
 
-    public void onViewLongClick();
+    public void onViewLongClick(View view);
 
 }

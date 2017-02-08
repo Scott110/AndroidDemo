@@ -55,6 +55,18 @@
         </activity>
 
 
+        <activity android:name="com.scott.demo.simple.db.DbActivity">
+            <intent-filter>
+                <action android:name="android.intent.action.VIEW" />
+
+                <category android:name="android.intent.category.DEFAULT" />
+                <category android:name="android.intent.category.BROWSABLE" />
+
+                <data android:scheme="scott" />
+            </intent-filter>
+        </activity>
+
+
         <meta-data
             android:name="com.scott.lib.imageloader.glide.CustomerGlideModule"
             android:value="GlideModule" />
