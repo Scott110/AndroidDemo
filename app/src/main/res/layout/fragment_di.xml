@@ -4,6 +4,11 @@
 
     <data class=".dill">
 
+        <import type="com.scott.demo.simple.ui.DiFragment" />
+
+        <variable
+            name="fragment"
+            type="DiFragment" />
 
     </data>
 
@@ -24,6 +29,7 @@
             android:id="@+id/api_btn"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:onClick="@{fragment::onClick1}"
             android:text="请求忘了数据" />
 
 

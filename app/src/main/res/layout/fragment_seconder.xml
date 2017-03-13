@@ -13,7 +13,7 @@
 
         <import type="com.scott.demo.bean.Item" />
 
-        <import type="com.scott.demo.EventHandle" />
+        <import type="com.scott.libstyle.EventHandler" />
 
         <import type="com.scott.demo.SeconderFragment" />
 
@@ -53,7 +53,7 @@
 
         <variable
             name="handle"
-            type="EventHandle" />
+            type="EventHandler" />
 
         <variable
             name="fragment"

@@ -9,6 +9,7 @@ import com.scott.lib.imageloader.glide.glideprogress.ProgressLoadListener;
 /**
  * author: heshantao
  * data: 2017/1/10.
+ * 图片加载工具类
  */
 
 public class ImageLoaderUtil {

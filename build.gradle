@@ -34,9 +34,9 @@ task clean(type: Delete) {
 project.ext {
     applicationId = "com.scott.demo"
     minSdkVersion = 15
-    targetSdkVersion = 24
-    compileSdkVersion = 24
-    buildToolsVersion = "24.0.1"
+    targetSdkVersion = 25
+    compileSdkVersion = 25
+    buildToolsVersion = "25.0.2"
     versionCode = 1
     versionName = "1.0"
 }

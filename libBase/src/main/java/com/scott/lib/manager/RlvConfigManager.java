@@ -3,14 +3,10 @@ package com.scott.lib.manager;
 import android.content.Context;
 import android.databinding.ObservableArrayList;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 
 import com.scott.lib.config.RecyclerViewConfiguration;
 import com.scott.lib.dBinding.adapter.BindingRecyclerViewAdapter;
-import com.scott.lib.dBinding.adapter.BindingRecyclerViewAdapterFactory;
-import com.scott.lib.dBinding.adapter.ItemView;
-import com.scott.lib.dBinding.adapter.ItemViewArg;
-import com.scott.lib.dBinding.adapter.ItemViewSelector;
+import com.scott.lib.dBinding.adapter.OnItemBind;
 
 /**
  * author: heshantao
@@ -32,17 +28,16 @@ public class RlvConfigManager<T> {
 
 
     //获得默认线性RecyclerView配置信息
-    public RecyclerViewConfiguration DEFAULT(RecyclerView recyclerView, ItemView itemView, ObservableArrayList<T> list) {
+    public RecyclerViewConfiguration DEFAULT(RecyclerView recyclerView, OnItemBind itemBind, ObservableArrayList<T> list) {
         Context context = recyclerView.getContext();
         RecyclerView.LayoutManager mLayoutManager = layoutManagers.linear().create(recyclerView);
-        ItemViewArg<T> arg = ItemViewArg.of(itemView);
-        BindingRecyclerViewAdapter<T> adapter = BindingRecyclerViewAdapterFactory.DEFAULT.create(recyclerView, arg);
+        BindingRecyclerViewAdapter<T> adapter = new BindingRecyclerViewAdapter<>();
         RecyclerView.ItemDecoration decoration = decoManager.DEFAULT(context);
         RecyclerView.ItemAnimator animator = animManager.DEFAULT();
         RecyclerViewConfiguration config = new RecyclerViewConfiguration
                 .Builder().setAdapter(adapter)
                 .setItems(list)
-                .setItemView(itemView)
+                .setItemBind(itemBind)
                 .setLayoutManager(mLayoutManager)
                 .setRecyclerView(recyclerView)
                 .setDecor(decoration)
@@ -53,21 +48,22 @@ public class RlvConfigManager<T> {
 
 
     //获得默认复杂view的RecyclerView配置信息
-    public RecyclerViewConfiguration mutileRecyclerConfig(RecyclerView recyclerView, ItemViewSelector selector,
-                                                          ObservableArrayList<T> list, String adapterName) {
+    public RecyclerViewConfiguration mutileRecyclerConfig(RecyclerView recyclerView, OnItemBind itemBind,
+                                                          ObservableArrayList<T> list) {
         Context context = recyclerView.getContext();
         RecyclerView.LayoutManager mLayoutManager = layoutManagers.linear().create(recyclerView);
         RecyclerView.ItemDecoration decoration = decoManager.DEFAULT(context);
         RecyclerView.ItemAnimator animator = animManager.DEFAULT();
+        BindingRecyclerViewAdapter<T> adapter = new BindingRecyclerViewAdapter<>();
         RecyclerViewConfiguration config = new RecyclerViewConfiguration
                 .Builder()
                 .setItems(list)
-                .setItemViewSelector(selector)
+                .setItemBind(itemBind)
                 .setLayoutManager(mLayoutManager)
                 .setRecyclerView(recyclerView)
                 .setDecor(decoration)
                 .setAnimator(animator)
-                .setAdapterName(adapterName)
+                .setAdapter(adapter)
                 .build();
         return config;
     }

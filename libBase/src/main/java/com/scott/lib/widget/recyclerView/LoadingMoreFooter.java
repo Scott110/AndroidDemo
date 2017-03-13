@@ -1,16 +1,13 @@
 package com.scott.lib.widget.recyclerView;
 
 import android.content.Context;
-import android.databinding.DataBindingUtil;
 import android.support.v7.widget.RecyclerView;
 import android.util.AttributeSet;
-import android.view.LayoutInflater;
 import android.view.ViewGroup;
 import android.widget.FrameLayout;
 import android.widget.TextView;
 
 import com.scott.libstyle.EventHandler;
-import com.scott.libstyle.loadMoreFoot;
 
 
 /**
@@ -30,7 +27,7 @@ public class LoadingMoreFooter extends FrameLayout {
     private String loadingErroHint;
     Context mCxt;
     TextView hintTxt;
-    loadMoreFoot bind;
+    //loadMoreFoot bind;
 
 
     public LoadingMoreFooter(Context context) {
@@ -48,13 +45,13 @@ public class LoadingMoreFooter extends FrameLayout {
     private void initView() {
         setLayoutParams(new RecyclerView.LayoutParams(
                 ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT));
-        bind = DataBindingUtil.inflate(LayoutInflater.from(mCxt), com.scott.libstyle.R.layout.default_load_more, this, false);
-        hintTxt = bind.loadingMoreTv;
-        this.addView(bind.getRoot());
+        //bind = DataBindingUtil.inflate(LayoutInflater.from(mCxt), com.scott.libstyle.R.layout.default_load_more, this, false);
+        //hintTxt = bind.loadingMoreTv;
+        //this.addView(bind.getRoot());
     }
 
     public void setEventHandler(EventHandler handler) {
-        bind.setHandler(handler);
+        //bind.setHandler(handler);
     }
 
     public void setLoadingDoneHint(String loadingDoneHint) {
@@ -90,7 +87,7 @@ public class LoadingMoreFooter extends FrameLayout {
                 break;
             case STATE_LOADINGERRO:
                 hintTxt.setText("加载出错");
-                bind.setLoadingErro(true);
+                //bind.setLoadingErro(true);
                 this.setVisibility(VISIBLE);
                 break;
             default:

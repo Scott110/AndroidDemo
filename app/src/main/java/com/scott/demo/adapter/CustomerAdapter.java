@@ -2,10 +2,8 @@ package com.scott.demo.adapter;
 
 import android.databinding.ViewDataBinding;
 import android.support.annotation.LayoutRes;
-import android.support.annotation.NonNull;
 
 import com.scott.lib.dBinding.adapter.BindingRecyclerViewAdapter;
-import com.scott.lib.dBinding.adapter.ItemViewArg;
 
 /**
  * author: heshantao
@@ -14,10 +12,6 @@ import com.scott.lib.dBinding.adapter.ItemViewArg;
 
 public class CustomerAdapter extends BindingRecyclerViewAdapter {
     String name = "11111";
-
-    public CustomerAdapter(@NonNull ItemViewArg arg) {
-        super(arg);
-    }
 
     @Override
     public void onBindBinding(ViewDataBinding binding, int bindingVariable, @LayoutRes int layoutRes, int position, Object item) {

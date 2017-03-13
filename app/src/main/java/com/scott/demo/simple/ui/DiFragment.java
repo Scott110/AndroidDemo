@@ -4,7 +4,10 @@ import android.content.Context;
 import android.databinding.DataBindingUtil;
 import android.databinding.ObservableArrayList;
 import android.os.Bundle;
+import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
+import android.view.View;
 import android.widget.Toast;
 
 import com.scott.demo.BR;
@@ -12,18 +15,17 @@ import com.scott.demo.R;
 import com.scott.demo.api.PersonApi;
 import com.scott.demo.bean.Person;
 import com.scott.demo.di.InjectHelper;
-import com.scott.demo.di.component.FragmentComponent;
 import com.scott.demo.di.qualifier.ApplicationContext;
 import com.scott.demo.dill;
-import com.scott.lib.config.RecyclerViewConfiguration;
-import com.scott.lib.dBinding.adapter.BaseItemViewSelector;
-import com.scott.lib.dBinding.adapter.ItemView;
+import com.scott.lib.dBinding.adapter.BindingRecyclerViewAdapter;
+import com.scott.lib.dBinding.adapter.ItemBinding;
+import com.scott.lib.dBinding.adapter.OnItemBind;
 import com.scott.lib.manager.RlvConfigManager;
 import com.scott.lib.ui.BaseRlvFragment;
+import com.scott.libstyle.DbindingEventCallback;
+import com.scott.libstyle.EventHandler;
 
 import javax.inject.Inject;
-
-import butterknife.OnClick;
 
 /**
  * author: heshantao
@@ -31,7 +33,7 @@ import butterknife.OnClick;
  * 依赖注入测试
  */
 
-public class DiFragment extends BaseRlvFragment implements DiVMContract.View<Person> {
+public class DiFragment extends BaseRlvFragment implements DiVMContract.View<Person>, DbindingEventCallback {
     @Inject
     @ApplicationContext
     Context context;
@@ -43,7 +45,8 @@ public class DiFragment extends BaseRlvFragment implements DiVMContract.View<Per
     RlvConfigManager rlvConfigManager;
     dill binding;
     RecyclerView recyclerView;
-    ObservableArrayList persons;
+    ObservableArrayList<Person> persons;
+    EventHandler handler;
 
     public static DiFragment newInstance() {
         return new DiFragment();
@@ -60,6 +63,8 @@ public class DiFragment extends BaseRlvFragment implements DiVMContract.View<Per
         InjectHelper.getFragmentComponent(_mActivity, this).inject(this);
         binding = DataBindingUtil.setContentView(_mActivity, getLayoutId());
         recyclerView = binding.rlv;
+        binding.setFragment(this);
+        handler = new EventHandler(_mActivity, this);
         String name = context.getResources().getString(R.string.app_name);
         initRecyclerView();
 
@@ -78,7 +83,7 @@ public class DiFragment extends BaseRlvFragment implements DiVMContract.View<Per
 
     void initRecyclerView() {
         persons = new ObservableArrayList();
-        for (int i = 0; i < 3; i++) {
+        for (int i = 0; i < 15; i++) {
             Person person = new Person();
             person.setAge(i + "");
             person.setName("Scott：：：：：" + i);
@@ -86,28 +91,68 @@ public class DiFragment extends BaseRlvFragment implements DiVMContract.View<Per
             persons.add(person);
         }
 
-        BaseItemViewSelector<Person> selector = new BaseItemViewSelector<Person>() {
+
+        OnItemBind<Person> itemBind = new OnItemBind<Person>() {
             @Override
-            public void select(ItemView itemView, int position, Person item) {
+            public void onItemBind(ItemBinding itemBinding, int position, Person item) {
+                Log.d(TAG, "onItemBind: " + position);
                 if (position % 2 == 0) {
-                    itemView.set(BR.person, R.layout.item_text);
+                    itemBinding.set(BR.person, R.layout.item_text);
                 } else {
-                    itemView.set(BR.person, R.layout.item_red_txt);
+                    itemBinding.set(BR.person, R.layout.item_red_txt);
+                    itemBinding.bindExtra(BR.handler, handler);
                 }
             }
         };
+        ItemBinding itemBinding = ItemBinding.of(itemBind);
+        BindingRecyclerViewAdapter adapter = new BindingRecyclerViewAdapter();
+        adapter.setItemBinding(itemBinding);
+        adapter.setItems(persons);
+        LinearLayoutManager layoutManager = new LinearLayoutManager(_mActivity);
+        recyclerView.setLayoutManager(layoutManager);
+        adapter.onAttachedToRecyclerView(recyclerView);
+        recyclerView.setAdapter(adapter);
 
-        String adapterName = "com.scott.demo.adapter.CustomerAdapter";
-        RecyclerViewConfiguration configManager = rlvConfigManager
-                .mutileRecyclerConfig(recyclerView, selector, persons, adapterName);
-        configRecyclerView(configManager);
+
+        //String adapterName = "com.scott.demo.adapter.CustomerAdapter";
+        //RecyclerViewConfiguration configManager = rlvConfigManager
+        //      .mutileRecyclerConfig(recyclerView, selector, persons, adapterName);
+        //configRecyclerView(configManager);
 
     }
 
 
-    @OnClick(R.id.api_btn)
+   /* @OnClick(R.id.api_btn)
     void onClick() {
         api.setId("24");
-        viewModule.requestPersonInfo(api);
+        //viewModule.requestPersonInfo(api);
+        persons.get(0).setName("我很好呀");
+    }*/
+
+
+    public void onClick1(View view) {
+        Log.d(TAG, "onClick1: 1111");
+        persons.get(0).setName("我很好呀");
+    }
+
+    @Override
+    public void onViewClick(View view, Object o) {
+        Log.d(TAG, "点击了按钮");
+
+    }
+
+    @Override
+    public void onViewClick(View view) {
+
+    }
+
+    @Override
+    public void onViewLongClick(View view, Object o) {
+
+    }
+
+    @Override
+    public void onViewLongClick(View view) {
+
     }
 }

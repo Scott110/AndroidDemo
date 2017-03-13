@@ -104,6 +104,7 @@ public class XRecyclerView extends RecyclerView {
         return mFootView;
     }
 
+    //加载更多完成
     public void loadMoreComplete() {
         isLoadingData = false;
         if (mFootView instanceof LoadingMoreFooter) {
@@ -113,6 +114,7 @@ public class XRecyclerView extends RecyclerView {
         }
     }
 
+    //没有更多加载
     public void setNoMore(boolean noMore) {
         isLoadingData = false;
         isNoMore = noMore;
@@ -124,6 +126,7 @@ public class XRecyclerView extends RecyclerView {
     }
 
 
+    //加载失败
     public void setLoadingErro(boolean erro) {
         isLoadingData = false;
         isLoadingErro = erro;

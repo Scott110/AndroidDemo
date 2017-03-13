@@ -6,21 +6,15 @@ import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.widget.Toast;
 
-import com.google.gson.internal.ConstructorConstructor;
 import com.scott.lib.callback.LoadingMoreCallback;
 import com.scott.lib.config.RecyclerViewConfiguration;
-import com.scott.lib.dBinding.adapter.BaseItemViewSelector;
 import com.scott.lib.dBinding.adapter.BindingRecyclerViewAdapter;
-import com.scott.lib.dBinding.adapter.ItemView;
-import com.scott.lib.dBinding.adapter.ItemViewArg;
-import com.scott.lib.dBinding.adapter.ItemViewSelector;
+import com.scott.lib.dBinding.adapter.ItemBinding;
+import com.scott.lib.dBinding.adapter.OnItemBind;
 import com.scott.lib.widget.recyclerView.LoadingMoreFooter;
 import com.scott.lib.widget.recyclerView.XRecyclerView;
 import com.scott.libstyle.DbindingEventCallback;
 import com.scott.libstyle.EventHandler;
-import com.scott.util.StringUtils;
-
-import java.lang.reflect.Constructor;
 
 /**
  * author: heshantao
@@ -28,6 +22,7 @@ import java.lang.reflect.Constructor;
  */
 
 public abstract class BaseRlvFragment<T> extends BaseFragment implements LoadingMoreCallback {
+    public BindingRecyclerViewAdapter mAdapter;
     RecyclerView recyclerView;
 
     @Override
@@ -44,35 +39,24 @@ public abstract class BaseRlvFragment<T> extends BaseFragment implements Loading
     //配置RecyclerView
     public void configRecyclerView(RecyclerViewConfiguration confg) {
         if (confg == null) return;
-        ItemViewArg arg = null;
-        BindingRecyclerViewAdapter adapter = null;
+        ItemBinding binding = null;
         recyclerView = confg.getmRlv();
         RecyclerView.LayoutManager layoutManager = confg.getLayoutManager();
         RecyclerView.ItemAnimator animator = confg.getAnimator();
-        adapter = confg.getAdapter();
-        ItemView itemView = confg.getItemView();
+        mAdapter = confg.getAdapter();
+        OnItemBind onItemBind = confg.getItemBind();
         ObservableArrayList list = confg.getItems();
-        ItemViewSelector selector = confg.getSelector();
         RecyclerView.ItemDecoration decoration = confg.getDecor();
-        String adapterName = confg.getAdapterName();
         if (recyclerView == null || layoutManager == null) return;
 
-        if (itemView != null) {
-            arg = ItemViewArg.of(itemView);
+        if (onItemBind != null) {
+            binding = ItemBinding.of(onItemBind);
         }
 
-        if (selector != null) {
-            arg = ItemViewArg.of(selector);
-        }
-
-        if (adapter == null) {
-            if (!StringUtils.isEmpty(adapterName)) {
-                adapter = create(adapterName, arg);
-            }
-        }
-        if (adapter == null) return;
-        adapter.onAttachedToRecyclerView(recyclerView);
-        adapter.setItems(list);
+        if (mAdapter == null) return;
+        mAdapter.setItemBinding(binding);
+        //mAdapter.onAttachedToRecyclerView(recyclerView);
+        mAdapter.setItems(list);
         recyclerView.setLayoutManager(layoutManager);
 
         if (animator != null) {
@@ -82,12 +66,13 @@ public abstract class BaseRlvFragment<T> extends BaseFragment implements Loading
         if (decoration != null) {
             recyclerView.addItemDecoration(decoration);
         }
-        recyclerView.setAdapter(adapter);
+        recyclerView.setAdapter(mAdapter);
 
     }
 
 
-    //通过反射获得Adapter类名
+
+    /*//通过反射获得Adapter类名
     public BindingRecyclerViewAdapter create(String clazzName, ItemViewArg arg) {
         try {
             Class clazz = Class.forName(clazzName);
@@ -99,7 +84,7 @@ public abstract class BaseRlvFragment<T> extends BaseFragment implements Loading
                     "Unable to create Adapter for" + clazzName + e.getCause().getMessage(), e);
         }
 
-    }
+    }*/
 
     public void setRecyclerView(RecyclerView mRecyclerView) {
         recyclerView = mRecyclerView;

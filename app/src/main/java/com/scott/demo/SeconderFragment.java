@@ -5,31 +5,23 @@ import android.databinding.ObservableArrayList;
 import android.databinding.ViewDataBinding;
 import android.os.Bundle;
 import android.support.annotation.LayoutRes;
-import android.support.annotation.NonNull;
-import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.View;
 import android.widget.Toast;
 
-import com.scott.demo.adapter.CustomerAdapter;
 import com.scott.demo.bean.Animal;
 import com.scott.demo.bean.Item;
 import com.scott.demo.bean.Person;
 import com.scott.demo.bean.Student;
 import com.scott.demo.databinding.FragmentSeconderBinding;
 import com.scott.demo.databinding.ItemRedTxtBinding;
-import com.scott.libstyle.EventHandler;
-import com.scott.libstyle.DbindingEventCallback;
-import com.scott.lib.dBinding.adapter.BaseItemViewSelector;
 import com.scott.lib.dBinding.adapter.BindingRecyclerViewAdapter;
-import com.scott.lib.dBinding.adapter.ItemView;
-import com.scott.lib.dBinding.adapter.ItemViewArg;
-import com.scott.lib.manager.LayoutManagers;
 import com.scott.lib.ui.BaseRlvFragment;
 import com.scott.lib.widget.recyclerView.XRecyclerView;
+import com.scott.libstyle.DbindingEventCallback;
+import com.scott.libstyle.EventHandler;
 
-import java.lang.reflect.Constructor;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -79,8 +71,8 @@ public class SeconderFragment extends BaseRlvFragment implements DbindingEventCa
         student.setSname("Scotthe。。。。");
         binding.setStu(student);
 
-        EventHandle handle = new EventHandle(_mActivity);
-        binding.setHandle(handle);
+        EventHandler handle = new EventHandler(_mActivity);
+        //binding.setHandle(handle);
         binding.setFragment(this);
 
         Animal animal = new Animal();
@@ -137,9 +129,9 @@ public class SeconderFragment extends BaseRlvFragment implements DbindingEventCa
 
         //RecyclerView.LayoutManager linearLayoutManager = LayoutManagers.linear(LinearLayoutManager.VERTICAL, false).create(recyclerView);
 
-        ItemView itemView = ItemView.of(BR.subStu, R.layout.item_text);
+        //ItemView itemView = ItemView.of(BR.subStu, R.layout.item_text);
 
-        BaseItemViewSelector<Person> selector = new BaseItemViewSelector<Person>() {
+       /* BaseItemViewSelector<Person> selector = new BaseItemViewSelector<Person>() {
             @Override
             public void select(ItemView itemView, int position, Person item) {
                 if (position % 2 == 0) {
@@ -148,17 +140,17 @@ public class SeconderFragment extends BaseRlvFragment implements DbindingEventCa
                     itemView.set(BR.person, R.layout.item_red_txt);
                 }
             }
-        };
+        };*/
 
-        ItemViewArg<Person> arg = ItemViewArg.of(selector);
+       // ItemViewArg<Person> arg = ItemViewArg.of(selector);
 
         //BindingRecyclerViewAdapter<Person> adapter = BindingRecyclerViewAdapterFactory.DEFAULT.create(recyclerView, arg);
 
-        MyAdapter<Person> adapter = new MyAdapter<Person>(arg);
+        //MyAdapter<Person> adapter = new MyAdapter<Person>(arg);
         //adapter.onAttachedToRecyclerView(recyclerView);
-        adapter.onAttachedToRecyclerView(xRecyclerView);
+        //adapter.onAttachedToRecyclerView(xRecyclerView);
 
-        adapter.setItems(persons);
+        //adapter.setItems(persons);
       /*  adapter.setViewHolderFactory(new BindingRecyclerViewAdapter.ViewHolderFactory() {
             @Override
             public RecyclerView.ViewHolder createViewHolder(ViewDataBinding binding) {
@@ -171,7 +163,7 @@ public class SeconderFragment extends BaseRlvFragment implements DbindingEventCa
         //recyclerView.setAdapter(adapter);
 
         //xRecyclerView.setLayoutManager(linearLayoutManager);
-        xRecyclerView.setAdapter(adapter);
+        //xRecyclerView.setAdapter(adapter);
         setRecyclerView(xRecyclerView);
         setLoadingMore();
     }
@@ -201,9 +193,6 @@ public class SeconderFragment extends BaseRlvFragment implements DbindingEventCa
     class MyAdapter<Person> extends BindingRecyclerViewAdapter<Person> {
         String name = "11111";
 
-        public MyAdapter(@NonNull ItemViewArg<Person> arg) {
-            super(arg);
-        }
 
         @Override
         public void onBindBinding(ViewDataBinding binding, int bindingVariable, @LayoutRes int layoutRes, int position, Person item) {
@@ -241,15 +230,15 @@ public class SeconderFragment extends BaseRlvFragment implements DbindingEventCa
         //Person sub = (Person) (persons.get(5));
         //sub.setName("何善涛11-");
 
-        BindingRecyclerViewAdapter adapter = create("com.scott.demo.adapter.CustomerAdapter");
+       /* BindingRecyclerViewAdapter adapter = create("com.scott.demo.adapter.CustomerAdapter");
         if (adapter instanceof CustomerAdapter) {
             String name = ((CustomerAdapter) adapter).getName();
             Toast.makeText(_mActivity, "通过反射获得的用户名" + name, Toast.LENGTH_SHORT).show();
-        }
+        }*/
     }
 
 
-    public BindingRecyclerViewAdapter create(String className) {
+   /* public BindingRecyclerViewAdapter create(String className) {
 
         BaseItemViewSelector<Person> selector = new BaseItemViewSelector<Person>() {
             @Override
@@ -273,5 +262,5 @@ public class SeconderFragment extends BaseRlvFragment implements DbindingEventCa
                     "Unable to create Adapter for" + className + e.getCause().getMessage(), e);
         }
 
-    }
+    }*/
 }
